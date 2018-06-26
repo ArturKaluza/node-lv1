@@ -1,0 +1,83 @@
+.camera {
+  background: #f4f4f4;
+  width: 100%;
+  margin: 15px auto;
+  border: 1px solid #aaa;
+  padding: 10px;
+  transition: all .3s ease;
+
+  &:hover {
+    border-color: #277554;
+    outline: 3px solid #277554;
+  }
+
+  &:hover > &__cart {
+    background: #277554;
+    color: #fff;
+  }
+}
+
+.camera__heading {
+  display: flex;
+  justify-content: space-between;
+
+  &-title {
+    color: #777;
+    font-size: 24px;
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+
+  &-price {
+    background: #277554;
+    color: #fff;
+    padding: 10px 15px;
+    position: relative;
+    top: -10px;
+    right: -11px;
+  }
+}
+
+.camera__star{
+
+  &-iconFull {
+    color: #FFE526;
+  }
+
+  &-iconEmpty {
+    color: #aaa;
+  }
+}
+
+.camera__body-icons {
+  display: flex;
+  align-items: center;
+}
+
+.camera__body-icon {
+  display: block;
+  color: #34E122;
+  font-size: 24px;
+  margin: 10px;  
+}
+
+.camera__cart {
+  width: 170px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  top: 10px;
+  left: -10px;
+  transition: all .3s ease;
+  
+  &-icon {
+    font-size: 26px;
+    padding: 0 10px;
+  }
+
+  &-text {
+    font-size: 20px;
+    font-weight: 400;
+  }
+}

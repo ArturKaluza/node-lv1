@@ -1,0 +1,13 @@
+.cameras {
+  background: #ccc;
+  flex-grow: 4;
+  padding: 20px;
+  font-family: 'Roboto', sans-serif;
+
+  &__title {
+    color: #277554;
+    font-size: 30px;
+    font-weight: 300;
+  }
+}
+
