@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const mongoosePaginate = require('mongoose-paginate');
 
 const CameraSchema = new Schema({
     name: {
@@ -19,6 +20,9 @@ const CameraSchema = new Schema({
         required: true
     }
 });
+
+// add pagination to Schema
+CameraSchema.plugin(mongoosePaginate);
 
 const Camera = mongoose.model('Camera', CameraSchema);
 

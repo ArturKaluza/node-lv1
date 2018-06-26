@@ -4,30 +4,61 @@ const router = express.Router();
 // import camera model
 const {Camera} = require('../../db/models/Camera');
 
-// get all camera
-router.get('/', (req, res) => {
-  Camera.find({}).then(doc => {
-    
-    // insert 20 cameras if cameras length < 5
-    if (doc.length < 5) { 
-      Camera.collection.insert(add20Cameras(), function(error, docs) {
-        if (error) {
-          return res.status(400).send(error);
-        }
+// get all cameras
+// url construction = localhost:3000/camera?page=1&&limit=4
 
+router.get('/', (req, res) => {
+  let {page, limit} = req.query;
+  
+  // get all camreas
+  // url constuction = localhost:3000/camera
+  if (page === undefined && limit === undefined) {
+    Camera.find({}).then(doc => {
+      if (doc.length < 5) {
+        Camera.collection.insert(add20Cameras(), function(error, docs) {
+          if (error) res.status(400).send(error);
+          
         return res.send(docs);
-      })
+      });
     }
-    // if there is more than 5 cameras in collection - send all
     return res.send(doc);
+
+    }, e => res.status(400).send(e));
+  };
+ 
+  // checking query params
+  page === undefined ? page = 1 : page = parseInt(page);
+  limit === undefined ? limit = 5 : limit = parseInt(limit);
+  
+ // add pagination 
+  Camera.paginate({}, {page, limit}).then(response => {
+   return res.send(response);
   }, e => res.status(400).send(e));
 });
+
+// before pagination
+// router.get('/', (req, res) => {
+//   Camera.find({}).then(doc => {
+    
+//     // insert 20 cameras if cameras length < 5
+//     if (doc.length < 5) { 
+//       Camera.collection.insert(add20Cameras(), function(error, docs) {
+//         if (error) {
+//           return res.status(400).send(error);
+//         }
+
+//         return res.send(docs);
+//       })
+//     }
+//     // if there is more than 5 cameras in collection - send all
+//     return res.send(doc);
+//   }, e => res.status(400).send(e));
+// });
 
 // create new Camera
 router.post('/new', (req, res) => {
   const {name, amount, price, desc} = req.body;
-  console.log(name, amount, price, desc);
-
+  
   // checking data
   if (name === undefined || amount === undefined || price === undefined || desc === undefined) {
     return res.status(400).send();
