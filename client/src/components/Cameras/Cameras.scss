@@ -1,13 +1,19 @@
+.layout {
+  display: flex;
+}
+
 .cameras {
   background: #ccc;
   flex-grow: 4;
   padding: 20px;
+  padding-top: 0;
   font-family: 'Roboto', sans-serif;
 
   &__title {
     color: #277554;
     font-size: 30px;
     font-weight: 300;
+    margin-top: 20px;
   }
 }
 

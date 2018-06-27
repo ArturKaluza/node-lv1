@@ -3,6 +3,7 @@ import style from './Cameras.scss';
 
 import SearchBar from '../SearchBar/SearchBar';
 import Camera from '../Camera/Camera';
+import Navigation from '../Navigation/Nav';
 
 class Cameras extends Component {
   constructor() {
@@ -34,9 +35,11 @@ class Cameras extends Component {
 
   render() {
     return (
-      <div>
-        <SearchBar onSearch={this.handleInputChange}/>
+      <div className='layout'>
+        <Navigation />
+        
         <div className='cameras'>
+          <SearchBar onSearch={this.handleInputChange}/>
           <h3 className='cameras__title'>Cameras</h3>
           <ul>
             {this.state.cameras.map((camera, index) => 
