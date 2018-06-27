@@ -44,7 +44,15 @@
     border: 2px solid #fff;
     border-radius: 5px;
     opacity: 0;
+    transition: .3s ease;
     animation: showDelay 1s 1s forwards;
+
+    &:hover {
+      background: #fff;
+      color: #277554;
+      outline: 1px solid #fff;
+      outline-offset: 15px;
+      }
   }
 }
 
