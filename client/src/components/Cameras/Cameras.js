@@ -8,9 +8,20 @@ class Cameras extends Component {
   constructor() {
     super();
     this.state = {
-      cameras: [{name: 'item1', amount: '20', desc: 'amazing item 1', price: 19.99}]
+      cameras: [
+        {name: 'item1', amount: '20', desc: 'amazing item 1', price: 19.99}, 
+        {name: 'item100', amount: '520', desc: 'amazing item 100', price: 219.99},
+        {name: 'item100', amount: '520', desc: 'amazing item 100', price: 219.99}
+      ]
     }
   }
+  
+   componentDidMount() {
+     fetch('http://localhost:3000/product/camera?page=1&limit=4')
+      .then(res => res.json())
+      .then(data => this.setState({cameras: data.docs}))
+      .catch(e => console.log(e));
+   }
 
   render() {
     return (

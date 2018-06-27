@@ -10,11 +10,11 @@ const Camera = (props) => (
 
     <div className='camera__star'>
       <div className='camera__star-icons'>
-        <i class="camera__star-iconFull fas fa-star"></i>
-        <i class="camera__star-iconFull fas fa-star"></i>
-        <i class="camera__star-iconFull fas fa-star"></i>
-        <i class="camera__star-iconEmpty fas fa-star"></i>
-        <i class="camera__star-iconEmpty fas fa-star"></i>
+        <i className="camera__star-iconFull fas fa-star"></i>
+        <i className="camera__star-iconFull fas fa-star"></i>
+        <i className="camera__star-iconFull fas fa-star"></i>
+        <i className="camera__star-iconEmpty fas fa-star"></i>
+        <i className="camera__star-iconEmpty fas fa-star"></i>
       </div>
     </div>
 
