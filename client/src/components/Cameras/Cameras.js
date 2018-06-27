@@ -10,6 +10,8 @@ class Cameras extends Component {
     super();
     this.handleInputChange = this.handleInputChange.bind(this);
     this.paginationNext = this.paginationNext.bind(this);
+    this.paginationPrevius = this.paginationPrevius.bind(this);
+
     this.state = {
       cameras: [
         // {name: 'item1', amount: '20', desc: 'amazing item 1', price: 19.99}, 
@@ -43,6 +45,18 @@ class Cameras extends Component {
      .catch(e => console.log(e));
   }
 
+  paginationPrevius() {
+    const previusPage = this.state.currentPage -1;
+
+    fetch(`http://localhost:3000/product/camera?page=${previusPage}&limit=4`)
+      .then(res => res.json())
+      .then(data => this.setState({
+          cameras: data.docs,
+          currentPage: data.page,
+          pages: data.pages}))
+      .catch(e => console.log(e))
+  }
+
   paginationNext() {
     const nextPage = this.state.currentPage +1;
     
@@ -74,8 +88,10 @@ class Cameras extends Component {
 
             />)}
           </ul>
-          {}
-          {(this.state.pages && !(this.state.currentPage === this.state.pages) ) && <button className='next__btn' onClick={this.paginationNext} >Load more...</button>}
+          <div className='cameras__btn'>
+          {(this.state.currentPage > 1) && (this.state.currentPage <= this.state.pages) && <button className='cameras__btn-prev btn' onClick={this.paginationPrevius} >Go back</button>}
+          {(this.state.pages && !(this.state.currentPage === this.state.pages) ) && <button className='cameras__btn-next btn' onClick={this.paginationNext} >Go next</button>}
+          </div>
         </div>
       </div>
     )
