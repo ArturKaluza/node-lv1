@@ -11,6 +11,7 @@ const Navigation = () => (
         <NavLink to="/cameras" className="nav__list-item" activeClassName="is-active">Cameras</NavLink>
         <NavLink to="/tv" className="nav__list-item" activeClassName="is-active">TVs</NavLink>
         <NavLink to="/phones" className="nav__list-item" activeClassName="is-active">Phones</NavLink>
+        <NavLink to="/tam" className="nav__list-item" activeClassName="is-active">Not Found</NavLink>
       </ul>
       <h2 className='nav__heading'>Item per page</h2>
       <ul className='nav__list'>

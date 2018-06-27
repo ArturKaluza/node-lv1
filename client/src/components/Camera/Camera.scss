@@ -33,12 +33,13 @@
     color: #fff;
     padding: 10px 15px;
     position: relative;
-    top: -10px;
+    top: -11px;
     right: -11px;
   }
 }
 
 .camera__star{
+  margin-bottom: 10px;
 
   &-iconFull {
     color: #FFE526;
@@ -67,7 +68,7 @@
   display: flex;
   align-items: center;
   position: relative;
-  top: 10px;
+  top: 11px;
   left: -10px;
   transition: all .3s ease;
   
