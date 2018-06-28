@@ -6,6 +6,7 @@ import Navigation from '../components/Navigation/Nav';
 import Home from '../components/Home/Home';
 import Cameras from '../components/Cameras/Cameras';
 import NotFound from '../components/NotFound/NotFound';
+import Products from '../components/Products/Products';
 
 const AppRouter = () => (
     <BrowserRouter>
@@ -16,6 +17,7 @@ const AppRouter = () => (
             <Route path="/cameras" component={Cameras} />
             <Route path="/TV" component={Cameras} />
             <Route path="/phones" component={Cameras} />
+            <Route path="/product" component={Products} />
             <Route path='*' exact={true} component={NotFound} />
           </Switch>
         </div>

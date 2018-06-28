@@ -12,6 +12,7 @@ const Navigation = () => (
         <NavLink to="/tv" className="nav__list-item" activeClassName="is-active">TVs</NavLink>
         <NavLink to="/phones" className="nav__list-item" activeClassName="is-active">Phones</NavLink>
         <NavLink to="/tam" className="nav__list-item" activeClassName="is-active">Not Found</NavLink>
+        <NavLink to="/product" className="nav__list-prod" activeClassName="is-active">See all products</NavLink>
       </ul>
       <h2 className='nav__heading'>Item per page</h2>
       <ul className='nav__list'>
@@ -19,6 +20,7 @@ const Navigation = () => (
         <li className='nav__list-item'>5</li>
         <li className='nav__list-item'>7</li>
         <li className='nav__list-item'>10</li>
+        
       </ul>
     </div>
   </nav>

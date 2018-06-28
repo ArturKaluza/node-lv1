@@ -1,7 +1,8 @@
 .nav {
   width: 150px;
   margin-right: 50px;
-  background: #fff;
+  background: inherit;
+  
     
   &__heading {
     width: 100%;
@@ -10,12 +11,16 @@
     font-size: 20px;
     font-weight: 400;
     padding: 5px;
+    border: 2px solid #555;
+    border-bottom: none;
   }
 
   &__list {
     display: flex;
     flex-direction: column;
-    border: 1px solid #555;
+    background: #fff;
+    border: 2px solid #555;
+    margin-bottom: 20px;  
 
     &-item {
       display: block;
@@ -25,12 +30,30 @@
       transition: all .3s;
 
       &:not(:last-child) {
-        border-bottom: 1px solid #555;
+        border-bottom: 2px solid #555;
       }
 
       &:hover {
         background: #ccc;
         border-color: #555;
+      }      
+    }
+
+    &-prod {
+      display: block;
+      width: 100%;
+      background: #f1c40f;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 400;
+      padding: 5px 10px;
+      text-decoration: none;
+      text-transform: capitalize;
+      transition: .3s ease;
+
+      &:hover {
+        background: #fff;
+        color: #277554;
       }
     }
   }

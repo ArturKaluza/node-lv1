@@ -7,6 +7,8 @@ const app = express();
 
 app.use(bodyParser.json());
 
+const products = require('./routes/products');
+
 const camera = require('./routes/camera');
 const tv = require('./routes/TV');
 const phone = require('./routes/phone');
@@ -23,10 +25,12 @@ app.get('/', (req, res) => {
 });
 
 // query params url= localhost:3000/test?get=1&&limit=10
-app.get('/test', (req, res) => {
-    console.log(req.query);
-    res.send('query')
-});
+// app.get('/test', (req, res) => {
+//     console.log(req.query);
+//     res.send('query')
+// });
+
+app.use('/product', products);
 
 app.use('/product/camera', camera);
 app.use('/product/tv', tv);
