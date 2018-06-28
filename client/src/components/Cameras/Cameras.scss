@@ -17,9 +17,17 @@
   }
 
   &__btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    position: relative;
+    
+    &-prev {
+      position: absolute;
+      left: 30%
+    }
+
+    &-next {
+      position: absolute;
+      right: 30%;
+    }
   }
 }
 
@@ -31,7 +39,7 @@
   font-family: 'Roboto', sans-serif;
   border-radius: 5px;
   border: 1px solid #000;
-  margin: 40px;
+  margin: 30px;
   background: #277554;
   color: #fff;
   transition: .3s ease;

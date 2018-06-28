@@ -89,8 +89,8 @@ class Cameras extends Component {
             />)}
           </ul>
           <div className='cameras__btn'>
-          {(this.state.currentPage > 1) && (this.state.currentPage <= this.state.pages) && <button className='cameras__btn-prev btn' onClick={this.paginationPrevius} >Go back</button>}
-          {(this.state.pages && !(this.state.currentPage === this.state.pages) ) && <button className='cameras__btn-next btn' onClick={this.paginationNext} >Go next</button>}
+          {(this.state.currentPage > 1) && (this.state.currentPage <= this.state.pages) && <button className='cameras__btn-prev btn' onClick={this.paginationPrevius} >Previus</button>}
+          {(this.state.pages && !(this.state.currentPage === this.state.pages) ) && <button className='cameras__btn-next btn' onClick={this.paginationNext} >Next</button>}
           </div>
         </div>
       </div>
