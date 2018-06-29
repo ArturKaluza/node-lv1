@@ -4,22 +4,52 @@ const router = express.Router();
 const {Phone} = require('../../db/models/Phone');
 
 router.get('/', (req, res) => {
-  Phone.find({}).then(doc => {
-    
-    // insert 20 new phone if Phons length < 5
-    if (doc.length < 5) { 
-      Phone.collection.insert(add20Phone(), function(error, docs) {
-        if (error) {
-          return res.status(400).send(error);
-        }
-
+  let {page, limit} = req.query;
+  
+  // get all phones
+  // url constuction = localhost:3000/camera
+  if (page === undefined && limit === undefined) {
+    Phone.find({}).then(doc => {
+      if (doc.length < 5) {
+        Phone.collection.insert(add20Cameras(), function(error, docs) {
+          if (error) res.status(400).send(error);
+          
         return res.send(docs);
-      })
+      });
     }
-    // if there is more than 5 cameras in collection - send all
     return res.send(doc);
+
+    }, e => res.status(400).send(e));
+  };
+ 
+  // checking query params
+  page === undefined ? page = 1 : page = parseInt(page);
+  limit === undefined ? limit = 5 : limit = parseInt(limit);
+  
+ // add pagination 
+  Phone.paginate({}, {page, limit}).then(response => {
+   return res.send(response);
   }, e => res.status(400).send(e));
 });
+
+
+// router.get('/', (req, res) => {
+//   Phone.find({}).then(doc => {
+    
+//     // insert 20 new phone if Phons length < 5
+//     if (doc.length < 5) { 
+//       Phone.collection.insert(add20Phone(), function(error, docs) {
+//         if (error) {
+//           return res.status(400).send(error);
+//         }
+
+//         return res.send(docs);
+//       })
+//     }
+//     // if there is more than 5 cameras in collection - send all
+//     return res.send(doc);
+//   }, e => res.status(400).send(e));
+// });
 
 router.post('/new', (req, res) => {
   const {name, amount, price, desc} = req.body;

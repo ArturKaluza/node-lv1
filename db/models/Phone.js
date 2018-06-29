@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const mongoosePaginate = require('mongoose-paginate');
 
 const PhoneSchema = new Schema({
     name: {
@@ -19,6 +20,9 @@ const PhoneSchema = new Schema({
         required: true
     }
 });
+
+// add pagination to Schema
+PhoneSchema.plugin(mongoosePaginate);
 
 const Phone = mongoose.model('Phone', PhoneSchema);
 

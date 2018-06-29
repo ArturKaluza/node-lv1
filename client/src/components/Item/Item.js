@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import style from './Camera.scss';
+import style from './Item.scss';
 
 const Camera = (props) => (
   <div className='camera'>

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 
 import Navigation from '../Navigation/Nav';
 import SearchBar from '../SearchBar/SearchBar';
-import Camera from '../Camera/Camera';
+import Item from '../Item/Item';
 
 class Products extends Component {
   constructor(){
@@ -25,12 +25,12 @@ class Products extends Component {
       <div className='layout'>
         <Navigation />
         
-        <div className='cameras'>
+        <div className='items'>
           <SearchBar onSearch={this.handleInputChange}/>
-          <h3 className='cameras__title'>Products</h3>
+          <h3 className='items__title'>Products</h3>
           <ul>
             {this.state.items.map((camera, index) => 
-            <Camera 
+            <Item 
               key={index}
               name={camera.name} 
               amount={camera.amount}

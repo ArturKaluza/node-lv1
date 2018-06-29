@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import style from './Cameras.scss';
+import style from './Items.scss';
 
 import SearchBar from '../SearchBar/SearchBar';
-import Camera from '../Camera/Camera';
+import Item from '../Item/Item';
 import Navigation from '../Navigation/Nav';
 
 class Cameras extends Component {
@@ -13,23 +13,17 @@ class Cameras extends Component {
     this.paginationPrevius = this.paginationPrevius.bind(this);
 
     this.state = {
-      cameras: [
-        // {name: 'item1', amount: '20', desc: 'amazing item 1', price: 19.99}, 
-        // {name: 'item100', amount: '520', desc: 'amazing item 100', price: 219.99},
-        // {name: 'item100', amount: '520', desc: 'amazing item 100', price: 219.99}
-      ],
+      cameras: [],
       inputVal: '',
       currentPage: 1,
-      pages: null
+      pages: null,
     }
   }
   
   handleInputChange(e) {
-    console.log('e.target:', e.target.value);
-    this.setState({inputVal: e.target.value});
-    console.log('value:', this.state.inputVal);
-  }
-
+    console.log(e.target.value);
+  } 
+  
   // fetch data from DB
   componentDidMount() {
     fetch('http://localhost:3000/product/camera?page=1&limit=4')
@@ -40,7 +34,6 @@ class Cameras extends Component {
         currentPage: data.page,
         pages: data.pages
       })
-      console.log(this.state.pages);
     })
      .catch(e => console.log(e));
   }
@@ -74,12 +67,13 @@ class Cameras extends Component {
       <div className='layout'>
         <Navigation />
         
-        <div className='cameras'>
+        <div className='items'>
           <SearchBar onSearch={this.handleInputChange}/>
-          <h3 className='cameras__title'>Cameras</h3>
+          <h3 className='items__title'>Cameras</h3>
+          
           <ul>
             {this.state.cameras.map((camera, index) => 
-            <Camera 
+            <Item 
               key={index}
               name={camera.name} 
               amount={camera.amount}
@@ -88,9 +82,9 @@ class Cameras extends Component {
 
             />)}
           </ul>
-          <div className='cameras__btn'>
-          {(this.state.currentPage > 1) && (this.state.currentPage <= this.state.pages) && <button className='cameras__btn-prev btn' onClick={this.paginationPrevius} >Previus</button>}
-          {(this.state.pages && !(this.state.currentPage === this.state.pages) ) && <button className='cameras__btn-next btn' onClick={this.paginationNext} >Next</button>}
+          <div className='items__btn'>
+          {(this.state.currentPage > 1) && (this.state.currentPage <= this.state.pages) && <button className='items__btn-prev btn' onClick={this.paginationPrevius} >Previus</button>}
+          {(this.state.pages && !(this.state.currentPage === this.state.pages) ) && <button className='items__btn-next btn' onClick={this.paginationNext} >Next</button>}
           </div>
         </div>
       </div>
