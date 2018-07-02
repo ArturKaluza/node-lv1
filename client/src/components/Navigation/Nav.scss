@@ -5,16 +5,17 @@
   position: fixed;
   left: 25px;
   top: 20px;
-  
-    
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+      
   &__heading {
     width: 100%;
     background: #277554;
     color: #fff;
-    font-size: 20px;
-    font-weight: 400;
+    font-size: 16px;
+    font-weight: 300;
     padding: 5px;
-    border: 2px solid #555;
+    border: 1px solid #555;
     border-bottom: none;
   }
 
@@ -22,7 +23,7 @@
     display: flex;
     flex-direction: column;
     background: #fff;
-    border: 2px solid #555;
+    border: 1px solid #555;
     margin-bottom: 20px;  
 
     &-item {
@@ -30,10 +31,11 @@
       color: #555;
       text-decoration: none;
       padding: 5px 10px;
+      cursor: pointer;
       transition: all .3s;
 
       &:not(:last-child) {
-        border-bottom: 2px solid #555;
+        border-bottom: 1px solid #555;
       }
 
       &:hover {

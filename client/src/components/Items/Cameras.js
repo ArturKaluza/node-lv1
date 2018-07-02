@@ -11,12 +11,15 @@ class Cameras extends Component {
     this.handleInputChange = this.handleInputChange.bind(this);
     this.paginationNext = this.paginationNext.bind(this);
     this.paginationPrevius = this.paginationPrevius.bind(this);
+    this.handleItemPerPage = this.handleItemPerPage.bind(this);
+    this.fetchData = this.fetchData.bind(this);
 
     this.state = {
       cameras: [],
       inputVal: '',
       currentPage: 1,
       pages: null,
+      itemPerPage: 4
     }
   }
   
@@ -26,7 +29,11 @@ class Cameras extends Component {
   
   // fetch data from DB
   componentDidMount() {
-    fetch('http://localhost:3000/product/camera?page=1&limit=4')
+    this.fetchData();
+  }
+
+  fetchData() {
+    fetch(`http://localhost:3000/product/camera?page=1&limit=${this.state.itemPerPage}`)
      .then(res => res.json())
      .then(data => {
       this.setState({
@@ -41,7 +48,7 @@ class Cameras extends Component {
   paginationPrevius() {
     const previusPage = this.state.currentPage -1;
 
-    fetch(`http://localhost:3000/product/camera?page=${previusPage}&limit=4`)
+    fetch(`http://localhost:3000/product/camera?page=${previusPage}&limit=${this.state.itemPerPage}`)
       .then(res => res.json())
       .then(data => this.setState({
           cameras: data.docs,
@@ -53,7 +60,7 @@ class Cameras extends Component {
   paginationNext() {
     const nextPage = this.state.currentPage +1;
     
-    fetch(`http://localhost:3000/product/camera?page=${nextPage}&limit=4`)
+    fetch(`http://localhost:3000/product/camera?page=${nextPage}&limit=${this.state.itemPerPage}`)
       .then(res => res.json())
       .then(data => this.setState({
           cameras: data.docs,
@@ -62,10 +69,15 @@ class Cameras extends Component {
       .catch(e => console.log(e))
   }
 
+  handleItemPerPage(value) {
+    // execution fetchData after setState is complete
+    this.setState({itemPerPage: value}, () => this.fetchData());
+  }
+
   render() {
     return (
       <div className='layout'>
-        <Navigation />
+        <Navigation onItemPerPage={this.handleItemPerPage}/>
         
         <div className='items'>
           <SearchBar onSearch={this.handleInputChange}/>
