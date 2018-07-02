@@ -16,12 +16,30 @@ router.get('/', (req, res) => {
   if (page === undefined && limit === undefined) {
     Camera.find({}).then(doc => {
       if (doc.length < 1) {
-        return Camera.collection.insert(add20Cameras())
-          .then(docs => res.send(docs))
-          .catch(e => res.status(400).send(e));
+      // zamknąć add20Cameras w promisie
+      // następnie .then z Camera.find({})
+      
+        add20Cameras().forEach((item, index) => {
+          const camera = new Camera(item);
+          
+          camera.save().then(doc => {
+            doc.on('es-indexed', function(err, res){
+            if (err) throw err;
+            return Promise.resolve()
+            })
+          });
+        });
       }
-      res.send(doc)
-    }, e => res.status(400).send(e));
+    Promise.resolve() 
+    }).then()
+    res.send(doc);
+  }, e => res.status(400).send(e));    
+        //     return Camera.collection.insert(add20Cameras())
+    //       .then(docs => res.send(docs))
+    //       .catch(e => res.status(400).send(e));
+    //   }
+    //   res.send(doc)
+    // }, e => res.status(400).send(e));
     
   } else {
     // checking query params
@@ -41,7 +59,8 @@ router.get('/', (req, res) => {
     }, e => res.status(400).send(e));
   }  
 });
-
+  
+  
 // create new Camera
 router.post('/new', (req, res) => {
   const {name, amount, price, desc} = req.body;
