@@ -6,52 +6,39 @@ const {TV} = require('../../db/models/TV');
 router.get('/', (req, res) => {
   let {page, limit} = req.query;
   
-  // get all phones
+  // get all camreas
   // url constuction = localhost:3000/camera
+  
   if (page === undefined && limit === undefined) {
     TV.find({}).then(doc => {
-      if (doc.length < 5) {
-        TV.collection.insert(add20Cameras(), function(error, docs) {
-          if (error) res.status(400).send(error);
-          
-        return res.send(docs);
-      });
-    }
-    return res.send(doc);
-
+      if (doc.length < 1) {
+        return TV.collection.insert(add20TV())
+          .then(docs => res.send(docs))
+          .catch(e => res.status(400).send(e));
+      }
+      res.send(doc)
     }, e => res.status(400).send(e));
-  };
- 
-  // checking query params
-  page === undefined ? page = 1 : page = parseInt(page);
-  limit === undefined ? limit = 5 : limit = parseInt(limit);
-  
- // add pagination 
-  TV.paginate({}, {page, limit}).then(response => {
-   return res.send(response);
-  }, e => res.status(400).send(e));
+    
+  } else {
+    // checking query params
+    page === undefined ? page = 1 : page = parseInt(page);
+    limit === undefined ? limit = 5 : limit = parseInt(limit);
+      
+    // add pagination 
+    TV.paginate({}, {page, limit}).then(response => {
+      if (response.docs.length < 1) {
+        return TV.collection.insert(add20TV())
+          .then(() => TV.paginate({}, {page, limit}))
+          .then(docs => res.send(docs))
+          .catch(e => res.status(400).send(e));
+      }
+
+      res.send(response);
+    }, e => res.status(400).send(e));
+  }  
 });
 
-
-// router.get('/', (req, res) => {
-//   TV.find({}).then(doc => {
-    
-//     // insert 20 TV if TVs length < 5
-//     if (doc.length < 5) { 
-//       TV.collection.insert(add20TV(), function(error, docs) {
-//         if (error) {
-//           return res.status(400).send(error);
-//         }
-
-//         return res.send(docs);
-//       })
-//     }
-//     // if there is more than 5 cameras in collection - send all
-//     return res.send(doc);
-//   }, e => res.status(400).send(e));
-// });
-
-
+// create 
 router.post('/new', (req, res) => {
   const {name, amount, price, desc} = req.body;
   

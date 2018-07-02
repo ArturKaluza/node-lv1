@@ -12,48 +12,35 @@ router.get('/', (req, res) => {
   
   // get all camreas
   // url constuction = localhost:3000/camera
+  
   if (page === undefined && limit === undefined) {
     Camera.find({}).then(doc => {
-      if (doc.length < 5) {
-        Camera.collection.insert(add20Cameras(), function(error, docs) {
-          if (error) res.status(400).send(error);
-          
-        return res.send(docs);
-      });
-    }
-    return res.send(doc);
-
+      if (doc.length < 1) {
+        return Camera.collection.insert(add20Cameras())
+          .then(docs => res.send(docs))
+          .catch(e => res.status(400).send(e));
+      }
+      res.send(doc)
     }, e => res.status(400).send(e));
-  };
- 
-  // checking query params
-  page === undefined ? page = 1 : page = parseInt(page);
-  limit === undefined ? limit = 5 : limit = parseInt(limit);
-  
- // add pagination 
-  Camera.paginate({}, {page, limit}).then(response => {
-   return res.send(response);
-  }, e => res.status(400).send(e));
-});
-
-// before pagination
-// router.get('/', (req, res) => {
-//   Camera.find({}).then(doc => {
     
-//     // insert 20 cameras if cameras length < 5
-//     if (doc.length < 5) { 
-//       Camera.collection.insert(add20Cameras(), function(error, docs) {
-//         if (error) {
-//           return res.status(400).send(error);
-//         }
+  } else {
+    // checking query params
+    page === undefined ? page = 1 : page = parseInt(page);
+    limit === undefined ? limit = 5 : limit = parseInt(limit);
+      
+    // add pagination 
+    Camera.paginate({}, {page, limit}).then(response => {
+      if (response.docs.length < 1) {
+        return Camera.collection.insert(add20Cameras())
+          .then(() => Camera.paginate({}, {page, limit}))
+          .then(docs => res.send(docs))
+          .catch(e => res.status(400).send(e));
+      }
 
-//         return res.send(docs);
-//       })
-//     }
-//     // if there is more than 5 cameras in collection - send all
-//     return res.send(doc);
-//   }, e => res.status(400).send(e));
-// });
+      res.send(response);
+    }, e => res.status(400).send(e));
+  }  
+});
 
 // create new Camera
 router.post('/new', (req, res) => {

@@ -1,0 +1,13 @@
+version: '2'
+services:
+
+  db:
+    image: mongo:3.6-jessie
+    ports:
+      - "27017:27017"
+
+  els:
+    image: elasticsearch:latest
+    ports:
+      - "9200:9200"
+      - "9300:9300"

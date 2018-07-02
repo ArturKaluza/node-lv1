@@ -6,30 +6,36 @@ const {Phone} = require('../../db/models/Phone');
 router.get('/', (req, res) => {
   let {page, limit} = req.query;
   
-  // get all phones
+  // get all camreas
   // url constuction = localhost:3000/camera
+  
   if (page === undefined && limit === undefined) {
     Phone.find({}).then(doc => {
-      if (doc.length < 5) {
-        Phone.collection.insert(add20Cameras(), function(error, docs) {
-          if (error) res.status(400).send(error);
-          
-        return res.send(docs);
-      });
-    }
-    return res.send(doc);
-
+      if (doc.length < 1) {
+        return Phone.collection.insert(add20Phone())
+          .then(docs => res.send(docs))
+          .catch(e => res.status(400).send(e));
+      }
+      res.send(doc)
     }, e => res.status(400).send(e));
-  };
- 
-  // checking query params
-  page === undefined ? page = 1 : page = parseInt(page);
-  limit === undefined ? limit = 5 : limit = parseInt(limit);
-  
- // add pagination 
-  Phone.paginate({}, {page, limit}).then(response => {
-   return res.send(response);
-  }, e => res.status(400).send(e));
+    
+  } else {
+    // checking query params
+    page === undefined ? page = 1 : page = parseInt(page);
+    limit === undefined ? limit = 5 : limit = parseInt(limit);
+      
+    // add pagination 
+    Phone.paginate({}, {page, limit}).then(response => {
+      if (response.docs.length < 1) {
+        return Phone.collection.insert(add20Phone())
+          .then(() => Phone.paginate({}, {page, limit}))
+          .then(docs => res.send(docs))
+          .catch(e => res.status(400).send(e));
+      }
+
+      res.send(response);
+    }, e => res.status(400).send(e));
+  }  
 });
 
 
