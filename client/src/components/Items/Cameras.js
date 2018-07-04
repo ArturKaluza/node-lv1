@@ -14,7 +14,7 @@ class Cameras extends Component {
     this.handleItemPerPage = this.handleItemPerPage.bind(this);
     this.fetchData = this.fetchData.bind(this);
     this.renderList = this.renderList.bind(this);
-    this.renderFoundItem = this.renderFoundItem.bind(this);
+    this.renderFoundItems = this.renderFoundItems.bind(this);
 
     this.state = {
       cameras: [],
@@ -22,22 +22,19 @@ class Cameras extends Component {
       currentPage: 1,
       pages: null,
       itemPerPage: 4,
-      foundItem: []
+      foundItems: []
     }
   }
   
   handleInputChange(e) {
     const data = {
       "query": {
-             "match" : {
-                 "name" : {
-                     "query" : e.target.value
-                 }
-             }
-         }
-   }
-
-
+        "regexp":{
+          "name": e.target.value + ".*"
+          }
+        }
+      }
+    
     fetch(`http://localhost:9200/_search`, {
       method: 'POST', 
       body: JSON.stringify(data), 
@@ -48,9 +45,9 @@ class Cameras extends Component {
       .then(res => res.json())
       .then(data => {
         if (data.hits.hits[0]) {
-          this.setState({foundItem: data.hits.hits[0]._source})
+          this.setState({foundItems: data.hits.hits})
         } else {
-          this.setState({foundItem: []})
+          this.setState({foundItems: []})
         }       
       }); 
 
@@ -118,14 +115,17 @@ class Cameras extends Component {
     )
   }
 
-  renderFoundItem() {
+  renderFoundItems() {
     return (
-      <Item 
-        name={this.state.foundItem.name}
-        amount={this.state.foundItem.amount}
-        desc={this.state.foundItem.desc}
-        price={this.state.foundItem.price}
+      this.state.foundItems.map((foundItem, index) => 
+        <Item 
+          key={index}
+          name={foundItem._source.name}
+          amount={foundItem._source.amount}
+          desc={foundItem._source.desc}
+          price={foundItem._source.price}
       />
+      )      
     )
   }
 
@@ -139,12 +139,12 @@ class Cameras extends Component {
           <h3 className='items__title'>Cameras</h3>
                     
           <ul>
-            {this.state.foundItem.name ? this.renderFoundItem() : this.renderList()}
+            {this.state.foundItems[0] ? this.renderFoundItems()  : this.renderList()}
           </ul>
 
           <div className='items__btn'>
-          {(this.state.currentPage > 1) && (this.state.currentPage <= this.state.pages) && <button className='items__btn-prev btn' onClick={this.paginationPrevius} >Previus</button>}
-          {(this.state.pages && !(this.state.currentPage === this.state.pages) ) && <button className='items__btn-next btn' onClick={this.paginationNext} >Next</button>}
+          {!this.state.foundItems.name && ((this.state.currentPage > 1) && (this.state.currentPage <= this.state.pages) && <button className='items__btn-prev btn' onClick={this.paginationPrevius} >Previus</button>)}
+          {!this.state.foundItem && ((this.state.pages && !(this.state.currentPage === this.state.pages) ) && <button className='items__btn-next btn' onClick={this.paginationNext} >Next</button>)}
           </div>
         </div>
       </div>
