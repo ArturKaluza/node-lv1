@@ -15,31 +15,8 @@ router.get('/', (req, res) => {
   
   if (page === undefined && limit === undefined) {
     Camera.find({}).then(doc => {
-      if (doc.length < 1) {
-      // zamknąć add20Cameras w promisie
-      // następnie .then z Camera.find({})
-      
-        add20Cameras().forEach((item, index) => {
-          const camera = new Camera(item);
-          
-          camera.save().then(doc => {
-            doc.on('es-indexed', function(err, res){
-            if (err) throw err;
-            return Promise.resolve()
-            })
-          });
-        });
-      }
-    Promise.resolve() 
-    }).then()
-    res.send(doc);
-  }, e => res.status(400).send(e));    
-        //     return Camera.collection.insert(add20Cameras())
-    //       .then(docs => res.send(docs))
-    //       .catch(e => res.status(400).send(e));
-    //   }
-    //   res.send(doc)
-    // }, e => res.status(400).send(e));
+      return res.send(doc)
+    }, e => res.status(400).send(e));
     
   } else {
     // checking query params
@@ -48,13 +25,6 @@ router.get('/', (req, res) => {
       
     // add pagination 
     Camera.paginate({}, {page, limit}).then(response => {
-      if (response.docs.length < 1) {
-        return Camera.collection.insert(add20Cameras())
-          .then(() => Camera.paginate({}, {page, limit}))
-          .then(docs => res.send(docs))
-          .catch(e => res.status(400).send(e));
-      }
-
       res.send(response);
     }, e => res.status(400).send(e));
   }  
@@ -131,7 +101,7 @@ module.exports = router;
 const add20Cameras = () => {
   const cameras = [];
 
-  for (let i = 0; i < 20; i++) {
+  for (let i = 0; i < 3; i++) {
     cameras.push({
       name: 'item' + i,
       amount: 100,
@@ -142,3 +112,37 @@ const add20Cameras = () => {
 
   return cameras;
 };
+
+// add20Cameras().forEach(item => {
+//   const item = new Camera(item);
+
+//   item.save().then(doc => {
+//     doc.on('es-indexed')
+//   }, e => console.log(e));
+// })
+
+
+// const createCameras = () => {
+//   for (let i = 0; i++; i < 20) {
+//     const item = new Camera({name: 'camera ' + i, amount: 100, price: 99, desc: 'amazing item ' + i});
+
+//     item.save().then(doc => {
+//       console.log('indexed');
+//       doc.on('es-indexed')
+//     }, e => console.log(e));
+//   }
+// }
+
+
+// const createCameras = () => {
+//   const camera = new Camera({ name: 'Camera', amount: 100, price: 99, dec: 'Camera 0'});
+
+//   camera.save().then(doc => {
+//     doc.on('es-indexed', function(err, res) {
+//       if (err) throw err;
+//     });
+//   });
+
+//   const camera1 = new Camera({ name: 'Camera', amount: 100, price: 99, dec: 'Camera 1'});
+// }
+ 

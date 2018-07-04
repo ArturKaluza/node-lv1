@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "parallelshell \"npm run start-server\" \"npm run client\"",
+    "start-env": "docker-compose up",
     "start-server": "nodemon server/server",
     "install-all": "npm install && npm run client-install",
     "client-install": "cd client && npm install",
