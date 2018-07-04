@@ -13,21 +13,26 @@ const CameraSchema = new Schema({
     },
     amount: {
         type: Number,
-        required: true
+        required: true,
+        es_indexed:true
     },
     price: {
         type: Number,
-        require: true
+        require: true,
+        es_indexed: true
     },
     desc: {
         type: String,
-        required: true
+        required: true,
+        es_indexed:true
     }
 });
 
 // add pagination to Schema
 CameraSchema.plugin(mongoosePaginate);
-CameraSchema.plugin(mongoosastic);
+CameraSchema.plugin(mongoosastic, { bulk: {
+    size: 10
+}});
 
 const Camera = mongoose.model('Camera', CameraSchema);
 

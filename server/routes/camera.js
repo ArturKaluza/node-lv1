@@ -94,55 +94,11 @@ router.patch('/:id', (req, res) => {
   }, e => res.status(400).send(e));
 })
 
-module.exports = router;
-
-
-// util function
-const add20Cameras = () => {
-  const cameras = [];
-
-  for (let i = 0; i < 3; i++) {
-    cameras.push({
-      name: 'item' + i,
-      amount: 100,
-      price: 99,
-      desc: 'amazing item ' + i
-    });
-  }
-
-  return cameras;
-};
-
-// add20Cameras().forEach(item => {
-//   const item = new Camera(item);
-
-//   item.save().then(doc => {
-//     doc.on('es-indexed')
-//   }, e => console.log(e));
+// router.patch('./search', (req, res) => {
+//   Camera.search({"query": { "match_all": {} }
+//   }, (err, result) => {
+//     res.send(result);
+//   })
 // })
 
-
-// const createCameras = () => {
-//   for (let i = 0; i++; i < 20) {
-//     const item = new Camera({name: 'camera ' + i, amount: 100, price: 99, desc: 'amazing item ' + i});
-
-//     item.save().then(doc => {
-//       console.log('indexed');
-//       doc.on('es-indexed')
-//     }, e => console.log(e));
-//   }
-// }
-
-
-// const createCameras = () => {
-//   const camera = new Camera({ name: 'Camera', amount: 100, price: 99, dec: 'Camera 0'});
-
-//   camera.save().then(doc => {
-//     doc.on('es-indexed', function(err, res) {
-//       if (err) throw err;
-//     });
-//   });
-
-//   const camera1 = new Camera({ name: 'Camera', amount: 100, price: 99, dec: 'Camera 1'});
-// }
- 
+module.exports = router;
