@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import style from './Items.scss';
 
 import SearchBar from '../SearchBar/SearchBar';
-import Item from '../Item/Item';
 import Navigation from '../Navigation/Nav';
+import List from '../List/List';
 
 class Cameras extends Component {
   constructor() {
@@ -13,9 +13,7 @@ class Cameras extends Component {
     this.paginationPrevius = this.paginationPrevius.bind(this);
     this.handleItemPerPage = this.handleItemPerPage.bind(this);
     this.fetchData = this.fetchData.bind(this);
-    this.renderList = this.renderList.bind(this);
-    this.renderFoundItems = this.renderFoundItems.bind(this);
-
+   
     this.state = {
       cameras: [],
       inputVal: '',
@@ -27,6 +25,9 @@ class Cameras extends Component {
   }
   
   handleInputChange(e) {
+    e.preventDefault();
+    const flag = e.target.value.trim() ? true : false; 
+
     const data = {
       "query": {
         "regexp":{
@@ -44,15 +45,14 @@ class Cameras extends Component {
     })
       .then(res => res.json())
       .then(data => {
-        if (data.hits.hits[0]) {
-          this.setState({foundItems: data.hits.hits})
+        if (data.hits.hits[0] && flag) {
+          return this.setState({foundItems: data.hits.hits})
         } else {
-          this.setState({foundItems: []})
+          console.log('work');  
+          this.setState({foundItems: []}, () => this.fetchData())
         }       
-      }); 
-
-       
-  } 
+      });
+    } 
   
   // fetch data from DB
   componentDidMount() {
@@ -101,34 +101,6 @@ class Cameras extends Component {
     this.setState({itemPerPage: value}, () => this.fetchData());
   }
 
-  renderList() {
-    return (
-      this.state.cameras.map((camera, index) => 
-        <Item 
-          key={index}
-          name={camera.name} 
-          amount={camera.amount}
-          desc={camera.desc}
-          price={camera.price}
-
-        />)
-    )
-  }
-
-  renderFoundItems() {
-    return (
-      this.state.foundItems.map((foundItem, index) => 
-        <Item 
-          key={index}
-          name={foundItem._source.name}
-          amount={foundItem._source.amount}
-          desc={foundItem._source.desc}
-          price={foundItem._source.price}
-      />
-      )      
-    )
-  }
-
   render() {
     return (
       <div className='layout'>
@@ -137,14 +109,14 @@ class Cameras extends Component {
         <div className='items'>
           <SearchBar onSearch={this.handleInputChange}/>
           <h3 className='items__title'>Cameras</h3>
-                    
-          <ul>
-            {this.state.foundItems[0] ? this.renderFoundItems()  : this.renderList()}
-          </ul>
+          
+          {/* {Render list} */}
+            {this.state.foundItems[0] ? <List list={this.state.foundItems.map(item => item._source)} />  : <List list={this.state.cameras} /> }
+          
 
           <div className='items__btn'>
-          {!this.state.foundItems.name && ((this.state.currentPage > 1) && (this.state.currentPage <= this.state.pages) && <button className='items__btn-prev btn' onClick={this.paginationPrevius} >Previus</button>)}
-          {!this.state.foundItem && ((this.state.pages && !(this.state.currentPage === this.state.pages) ) && <button className='items__btn-next btn' onClick={this.paginationNext} >Next</button>)}
+          {!this.state.foundItems.length && ((this.state.currentPage > 1) && (this.state.currentPage <= this.state.pages) && <button className='items__btn-prev btn' onClick={this.paginationPrevius} >Previus</button>)}
+          {!this.state.foundItems.length && ((this.state.pages && !(this.state.currentPage === this.state.pages) ) && <button className='items__btn-next btn' onClick={this.paginationNext} >Next</button>)}
           </div>
         </div>
       </div>
