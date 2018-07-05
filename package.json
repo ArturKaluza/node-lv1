@@ -20,6 +20,7 @@
     "mongoosastic": "^4.4.1",
     "mongoose": "^5.1.6",
     "mongoose-paginate": "^5.0.3",
+    "node-fetch": "^2.1.2",
     "parallelshell": "^3.0.2"
   },
   "devDependencies": {}

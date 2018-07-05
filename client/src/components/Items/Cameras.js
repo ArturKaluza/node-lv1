@@ -28,26 +28,12 @@ class Cameras extends Component {
     e.preventDefault();
     const flag = e.target.value.trim() ? true : false; 
 
-    const data = {
-      "size": 50,
-      "query": {
-        "fuzzy": {
-          "name": e.target.value
-        }
-      }
-    }
     
-    fetch(`http://localhost:9200/_search`, {
-      method: 'POST', 
-      body: JSON.stringify(data), 
-      headers:{
-        'Content-Type': 'application/json'
-      }
-    })
+    fetch(`http://localhost:3000/search/${e.target.value}`)
       .then(res => res.json())
       .then(data => {
-        if (data.hits.hits[0] && flag) {
-          return this.setState({foundItems: data.hits.hits})
+        if (data[0] && flag) {
+          return this.setState({foundItems: data})
         } else {
           this.setState({foundItems: []}, () => this.fetchData())
         }       
@@ -63,7 +49,7 @@ class Cameras extends Component {
     fetch(`http://localhost:3000/product/camera?page=1&limit=${this.state.itemPerPage}`)
      .then(res => res.json())
      .then(data => {
-      this.setState({
+        this.setState({
         cameras: data.docs,
         currentPage: data.page,
         pages: data.pages
