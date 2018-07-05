@@ -29,6 +29,7 @@ class Cameras extends Component {
     const flag = e.target.value.trim() ? true : false; 
 
     const data = {
+      "size": 50,
       "query": {
         "regexp":{
           "name": e.target.value + ".*"
@@ -48,7 +49,6 @@ class Cameras extends Component {
         if (data.hits.hits[0] && flag) {
           return this.setState({foundItems: data.hits.hits})
         } else {
-          console.log('work');  
           this.setState({foundItems: []}, () => this.fetchData())
         }       
       });
