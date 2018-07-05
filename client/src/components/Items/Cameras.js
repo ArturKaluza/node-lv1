@@ -31,11 +31,11 @@ class Cameras extends Component {
     const data = {
       "size": 50,
       "query": {
-        "regexp":{
-          "name": e.target.value + ".*"
-          }
+        "fuzzy": {
+          "name": e.target.value
         }
       }
+    }
     
     fetch(`http://localhost:9200/_search`, {
       method: 'POST', 
