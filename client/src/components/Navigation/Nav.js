@@ -14,14 +14,17 @@ const Navigation = (props) => (
         <NavLink to="/tam" className="nav__list-item" activeClassName="is-active">Not Found</NavLink>
         <NavLink to="/product" className="nav__list-prod" activeClassName="is-active">All</NavLink>
       </ul>
-      <h2 className='nav__heading'>Item per page</h2>
-      <ul className='nav__list'>
-        <li className='nav__list-item' onClick={() => props.onItemPerPage(4)}>4</li>
-        <li className='nav__list-item' onClick={() => props.onItemPerPage(5)}>5</li>
-        <li className='nav__list-item' onClick={() => props.onItemPerPage(7)}>7</li>
-        <li className='nav__list-item' onClick={() => props.onItemPerPage(10)}>10</li>
-        
-      </ul>
+      
+      <div className={props.visible}>
+        <h2 className='nav__heading'>Item per page</h2>
+        <ul className='nav__list'>
+          <li className='nav__list-item' onClick={() => props.onItemPerPage(4)}>4</li>
+          <li className='nav__list-item' onClick={() => props.onItemPerPage(5)}>5</li>
+          <li className='nav__list-item' onClick={() => props.onItemPerPage(7)}>7</li>
+          <li className='nav__list-item' onClick={() => props.onItemPerPage(10)}>10</li>
+        </ul>
+      </div>
+
     </div>
   </nav>
 )

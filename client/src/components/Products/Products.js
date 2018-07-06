@@ -49,7 +49,7 @@ class Products extends Component {
   render() {
     return (
       <div className='layout'>
-        <Navigation />
+        <Navigation visible={'hidden'}/>
         
         <div className='items'>
           <SearchBar onSearch={this.handleInputChange}/>
