@@ -7,6 +7,7 @@
     "start": "parallelshell \"npm run start-server\" \"npm run client\"",
     "start-env": "docker-compose up",
     "start-server": "nodemon server/server",
+    "start-test": "mocha server/**/*.test.js",
     "install-all": "npm install && npm run client-install",
     "client-install": "cd client && npm install",
     "client": "cd client && npm start"
@@ -23,5 +24,9 @@
     "node-fetch": "^2.1.2",
     "parallelshell": "^3.0.2"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "supertest": "^3.1.0"
+  }
 }

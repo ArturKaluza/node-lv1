@@ -36,6 +36,22 @@ CameraSchema.plugin(mongoosastic, { bulk: {
 
 const Camera = mongoose.model('Camera', CameraSchema);
 
+// CameraSchema.methods.checkExsits = () => {
+//     Camera.find({})
+//         .then(docs => {
+//             if (docs.length < 1) {
+//                 new Promise(addItems('Camera').forEach(item => {
+//                     const newItem = new Camera(item);
+//                     newItem.save();
+                    
+//                 }), e => console.log(e)
+//             )}
+//         })
+//         .catch(e => console.log(e))
+// }
+
+// CameraSchema.checkExsits();
+
 Camera.find({})
     .then(docs => {
         if (docs.length < 1) {

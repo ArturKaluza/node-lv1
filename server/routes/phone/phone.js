@@ -1,11 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-// import camera model
-const {Camera} = require('../../db/models/Camera');
-
-// get all cameras
-// url construction = localhost:3000/camera?page=1&&limit=4
+const {Phone} = require('../../../db/models/Phone');
 
 router.get('/', (req, res) => {
   let {page, limit} = req.query;
@@ -14,7 +10,7 @@ router.get('/', (req, res) => {
   // url constuction = localhost:3000/camera
   
   if (page === undefined && limit === undefined) {
-    Camera.find({}).then(doc => {
+    Phone.find({}).then(doc => {
       return res.send(doc)
     }, e => res.status(400).send(e));
     
@@ -24,14 +20,13 @@ router.get('/', (req, res) => {
     limit === undefined ? limit = 5 : limit = parseInt(limit);
       
     // add pagination 
-    Camera.paginate({}, {page, limit}).then(response => {
+    Phone.paginate({}, {page, limit}).then(response => {
       res.send(response);
     }, e => res.status(400).send(e));
   }  
 });
-  
-  
-// create new Camera
+
+// POST new Phone
 router.post('/new', (req, res) => {
   const {name, amount, price, desc} = req.body;
   
@@ -40,9 +35,9 @@ router.post('/new', (req, res) => {
     return res.status(400).send();
   }
 
-  const camera = new Camera({name, amount, price, desc});
+  const phone = new Phone({name, amount, price, desc});
 
-  camera.save().then(item => {
+  phone.save().then(item => {
     res.status(201).send(item);
   }, e => res.status(400).send(e));
 })
@@ -51,7 +46,7 @@ router.post('/new', (req, res) => {
 router.get('/:id', (req, res) => {
   const id = req.params.id;
 
-  Camera.findById(id).then(item => {
+  Phone.findById(id).then(item => {
     if (!item) {
       return res.status(404).send();
     }
@@ -64,7 +59,7 @@ router.get('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const id = req.params.id;
 
-  Camera.findByIdAndRemove(id).then(item => {
+  Phone.findByIdAndRemove(id).then(item => {
     if (!item) {
       return res.status(404).send();
     }
@@ -86,7 +81,7 @@ router.patch('/:id', (req, res) => {
     return res.status(400).send();
   }
 
-  Camera.findByIdAndUpdate(id, {name, amount, desc, price}, {new: true}, (e, doc) => {
+  Phone.findByIdAndUpdate(id, {name, amount, desc, price}, {new: true}, (e, doc) => {
     if (!doc) {
       return res.status(404).send();
     }
@@ -94,11 +89,19 @@ router.patch('/:id', (req, res) => {
   }, e => res.status(400).send(e));
 })
 
-// router.patch('./search', (req, res) => {
-//   Camera.search({"query": { "match_all": {} }
-//   }, (err, result) => {
-//     res.send(result);
-//   })
-// })
-
 module.exports = router;
+
+const add20Phone = () => {
+  const phone = [];
+
+  for (let i = 0; i < 20; i++) {
+    phone.push({
+      name: 'Phone item' + i,
+      amount: 100,
+      price: 99,
+      desc: 'amazing item phone ' + i
+    });
+  }
+
+  return phone;
+};

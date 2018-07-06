@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const {Phone} = require('../../db/models/Phone');
-const {Camera} = require('../../db/models/Camera');
-const {TV} = require('../../db/models/TV');
+const {Phone} = require('../../../db/models/Phone');
+const {Camera} = require('../../../db/models/Camera');
+const {TV} = require('../../../db/models/TV');
 
 router.get('/', (req, res) => {
   //  get all item from collestions  

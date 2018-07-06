@@ -27,18 +27,16 @@ class Cameras extends Component {
   handleInputChange(e) {
     e.preventDefault();
     const flag = e.target.value.trim() ? true : false; 
-    
-    if (e.target.value.trim().length > 3) {
-      fetch(`http://localhost:3000/search/${e.target.value}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data[0] && flag) {
-          return this.setState({foundItems: data})
-        } else {
-          this.setState({foundItems: []}, () => this.fetchData())
-        }       
-      });
-    }
+        
+    fetch(`http://localhost:3000/search/${e.target.value}`)
+    .then(res => res.json())
+    .then(data => {
+      if (data[0] && flag) {
+        return this.setState({foundItems: data})
+      } else {
+        this.setState({foundItems: []}, () => this.fetchData())
+      }       
+    });    
   } 
   
   // fetch data from DB

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {TV} = require('../../db/models/TV');
+const {TV} = require('../../../db/models/TV');
 
 router.get('/', (req, res) => {
   let {page, limit} = req.query;
