@@ -27,9 +27,9 @@ class Cameras extends Component {
   handleInputChange(e) {
     e.preventDefault();
     const flag = e.target.value.trim() ? true : false; 
-
     
-    fetch(`http://localhost:3000/search/${e.target.value}`)
+    if (e.target.value.trim().length > 3) {
+      fetch(`http://localhost:3000/search/${e.target.value}`)
       .then(res => res.json())
       .then(data => {
         if (data[0] && flag) {
@@ -38,7 +38,8 @@ class Cameras extends Component {
           this.setState({foundItems: []}, () => this.fetchData())
         }       
       });
-    } 
+    }
+  } 
   
   // fetch data from DB
   componentDidMount() {

@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import style from './Items.scss';
 
 import SearchBar from '../SearchBar/SearchBar';
-import Item from '../Item/Item';
 import Navigation from '../Navigation/Nav';
+import List from '../List/List';
 
 class Phones extends Component {
   constructor() {
@@ -13,18 +13,33 @@ class Phones extends Component {
     this.paginationPrevius = this.paginationPrevius.bind(this);
     this.handleItemPerPage = this.handleItemPerPage.bind(this);
     this.fetchData = this.fetchData.bind(this);
-
+   
     this.state = {
       phones: [],
       inputVal: '',
       currentPage: 1,
       pages: null,
-      itemPerPage: 4
+      itemPerPage: 4,
+      foundItems: []
     }
   }
   
   handleInputChange(e) {
-    console.log(e.target.value);
+    e.preventDefault();
+    const flag = e.target.value.trim() ? true : false; 
+
+    if (e.target.value.trim().length > 3) {
+      fetch(`http://localhost:3000/search/${e.target.value}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data[0] && flag) {
+          return this.setState({foundItems: data})
+        } else {
+          this.setState({foundItems: []}, () => this.fetchData())
+        }       
+      });
+    }
+   
   } 
   
   // fetch data from DB
@@ -33,10 +48,10 @@ class Phones extends Component {
   }
 
   fetchData() {
-    fetch(`http://localhost:3000/product/camera?page=1&limit=${this.state.itemPerPage}`)
+    fetch(`http://localhost:3000/product/phone?page=1&limit=${this.state.itemPerPage}`)
      .then(res => res.json())
      .then(data => {
-      this.setState({
+        this.setState({
         phones: data.docs,
         currentPage: data.page,
         pages: data.pages
@@ -70,32 +85,26 @@ class Phones extends Component {
   }
 
   handleItemPerPage(value) {
+    // execution fetchData after setState is complete
     this.setState({itemPerPage: value}, () => this.fetchData());
   }
 
   render() {
     return (
       <div className='layout'>
-        <Navigation onItemPerPage={this.handleItemPerPage} />
+        <Navigation onItemPerPage={this.handleItemPerPage}/>
         
         <div className='items'>
           <SearchBar onSearch={this.handleInputChange}/>
           <h3 className='items__title'>Phones</h3>
           
-          <ul>
-            {this.state.phones.map((phone, index) => 
-            <Item 
-              key={index}
-              name={phone.name} 
-              amount={phone.amount}
-              desc={phone.desc}
-              price={phone.price}
+          {/* {Render list} */}
+            {this.state.foundItems[0] ? <List list={this.state.foundItems.map(item => item._source)} />  : <List list={this.state.phones} /> }
+          
 
-            />)}
-          </ul>
           <div className='items__btn'>
-          {(this.state.currentPage > 1) && (this.state.currentPage <= this.state.pages) && <button className='items__btn-prev btn' onClick={this.paginationPrevius} >Previus</button>}
-          {(this.state.pages && !(this.state.currentPage === this.state.pages) ) && <button className='items__btn-next btn' onClick={this.paginationNext} >Next</button>}
+          {!this.state.foundItems.length && ((this.state.currentPage > 1) && (this.state.currentPage <= this.state.pages) && <button className='items__btn-prev btn' onClick={this.paginationPrevius} >Previus</button>)}
+          {!this.state.foundItems.length && ((this.state.pages && !(this.state.currentPage === this.state.pages) ) && <button className='items__btn-next btn' onClick={this.paginationNext} >Next</button>)}
           </div>
         </div>
       </div>
