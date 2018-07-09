@@ -49,7 +49,7 @@ router.post('/new', (req, res) => {
   
   // checking data
   if (name === undefined || amount === undefined || price === undefined || desc === undefined) {
-    return res.status(400).send();
+    return res.status(400).json({});
   }
 
   const camera = new Camera({name, amount, price, desc});

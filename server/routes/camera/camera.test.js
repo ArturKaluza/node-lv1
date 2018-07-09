@@ -19,7 +19,7 @@ describe('Camera', () => {
       .end(done()) 
   });
 
-  it('GET should return one item', (done) => {
+  it('GET should return 404', (done) => {
     request(app)
       .get('/product/camera/5b43234ecf930b0e0ccf3416')
       .expect(404)

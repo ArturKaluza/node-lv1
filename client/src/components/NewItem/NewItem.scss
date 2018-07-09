@@ -1,0 +1,93 @@
+.form {
+  width: 70%;
+  margin: 5vh auto 0;
+  background: #fff;
+  font-family: "Roboto", sans-serif;
+  text-align: center;
+  border: 1px solid #277554;
+  border-radius: 3px;
+
+  &__heading {
+    margin: 40px auto;
+
+    &-title {
+    color: #277554;
+    font-size: 32px;
+    font-weight: 300;
+    }
+  }
+
+  &__body-form {
+    width: 70%;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    &-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 30px;
+      position: relative;
+
+      &-label {
+        color: #277554;
+        font-size: 24px;
+        font-weight: 300;
+        margin-bottom: 6px;
+      }
+
+      &-input {
+        height: 30px;
+        width: 100%;
+        border: 1px solid #277554;
+        border-radius: 3px;
+        color: #277554;
+        font-size: 20px;
+        height: 36px;
+        transition: .3s ease;
+
+        &:focus {
+          background: lighten(#277554, 65%);
+        }
+      }
+
+      &-textarea {
+        height: 90px;
+        color: #277554;
+        font-size: 20px;
+        line-height: 30px;
+        border: 1px solid #277554;
+        border-radius: 3px;
+        transition: .3s ease;
+
+        &:focus {
+          background: lighten(#277554, 65%);
+        }
+      }
+    }
+
+    &-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      background: #277554;
+      width: 300px;
+      text-decoration: none;
+    }  
+  }
+}
+
+.display {
+  display: block;
+  margin: 5px auto;
+  color: #e74c3c;
+  font-size: 20px;
+  font-weight: 400;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
