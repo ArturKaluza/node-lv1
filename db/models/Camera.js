@@ -51,19 +51,21 @@ const Camera = mongoose.model('Camera', CameraSchema);
 // }
 
 // CameraSchema.checkExsits();
+const checkCamera = async () => {
+    const docs = await Camera.find({})
 
-Camera.find({})
-    .then(docs => {
-        if (docs.length < 1) {
-            new Promise(addItems('Camera').forEach(item => {
+    if (docs.length < 1) {
+        new Promise(addItems('Camera')
+            .forEach(item => {
                 const newItem = new Camera(item);
-                newItem.save();
-                
-            }), e => console.log(e)
-        )}
-    })
-    .catch(e => console.log(e))
-    
+                newItem.save()
+            }) 
+        ,(e) => console.log(e))
+    }
+}
 
+if (process.env.NODE_ENV !== 'test') {
+    checkCamera();
+}
 
 module.exports = {Camera};

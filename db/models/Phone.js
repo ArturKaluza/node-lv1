@@ -34,10 +34,12 @@ PhoneSchema.plugin(mongoosastic);
 
 const Phone = mongoose.model('Phone', PhoneSchema);
 
-Phone.find({})
+// populate item for development mode
+if (process.env.NODE_ENV !== 'test') {
+    Phone.find({})
     .then(docs => {
         if (docs.length < 1) {
-            new Promise(addItems('Phone').forEach(item => {
+            new Promise((docs) => addItems('Phone').forEach(item => {
                 const newItem = new Phone(item);
                 newItem.save();
                 
@@ -45,5 +47,8 @@ Phone.find({})
         )}
     })
     .catch(e => console.log(e))
+} 
+
+
 
 module.exports = {Phone};

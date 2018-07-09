@@ -34,16 +34,19 @@ TVSchema.plugin(mongoosastic);
 
 const TV = mongoose.model('TV', TVSchema);
 
-TV.find({})
-    .then(docs => {
-        if (docs.length < 1) {
-            new Promise(addItems('TV').forEach(item => {
-                const newItem = new TV(item);
-                newItem.save();
-                
-            }), e => console.log(e)
-        )}
-    })
-    .catch(e => console.log(e))
+// populate item for development mode
+if (process.env.NODE_ENV !== 'test') {
+    TV.find({})
+        .then(docs => {
+            if (docs.length < 1) {
+                new Promise(addItems('TV').forEach(item => {
+                    const newItem = new TV(item);
+                    newItem.save();
+                    
+                }), e => console.log(e)
+            )}
+        })
+        .catch(e => console.log(e))
+}
 
 module.exports = {TV};
