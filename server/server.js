@@ -13,6 +13,7 @@ const camera = require('./routes/camera/camera');
 const tv = require('./routes/TV/TV');
 const phone = require('./routes/phone/phone');
 const search = require('./routes/search/search');
+const users = require('./routes/users/users');
 
 // CORS enable 
 app.use(function(req, res, next) {
@@ -37,6 +38,9 @@ app.use('/product/tv', tv);
 app.use('/product/phone', phone);
 
 app.use('/search/', search);
+
+app.use('/users', users);
+
 
 app.listen(3000, () => {
     console.log('port: 3000');

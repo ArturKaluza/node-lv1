@@ -10,7 +10,7 @@ class SearchBar extends Component {
     return (
       <div className='searchBar'>
         <h3 className='searchBar__text'>Online Store</h3>
-        <input className='searchBar__input' type='text' placeholder='Search...' onKeyUp={this.props.onSearch} />        
+        <input className='searchBar__input' type='text' placeholder='Search...' onKeyUp={this.props.onSearch} />
       </div>
     )
   }
