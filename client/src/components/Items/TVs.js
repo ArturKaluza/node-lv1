@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import style from './Items.scss';
 
 import SearchBar from '../SearchBar/SearchBar';
@@ -93,7 +94,11 @@ class TVs extends Component {
         
         <div className='items'>
           <SearchBar onSearch={this.handleInputChange}/>
-          <h3 className='items__title'>TVs</h3>
+          
+          <div className="heading">
+            <h3 className='items__title'>TVs</h3>
+            <NavLink to="/cameras/new" className="heading__new btn">add new item</NavLink>
+          </div>
           
           {/* {Render list} */}
             {this.state.foundItems[0] ? <List list={this.state.foundItems.map(item => item._source)} />  : <List list={this.state.tvs} /> }

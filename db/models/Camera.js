@@ -55,12 +55,12 @@ const checkCamera = async () => {
     const docs = await Camera.find({})
 
     if (docs.length < 1) {
-        new Promise(addItems('Camera')
+        new Promise((addItems('Camera')
             .forEach(item => {
                 const newItem = new Camera(item);
                 newItem.save()
             }) 
-        ,(e) => console.log(e))
+        ),(e) => console.log(e))
     }
 }
 

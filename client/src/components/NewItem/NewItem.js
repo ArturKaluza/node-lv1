@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import style from './NewItem.scss';
 
 class NewItem extends Component {
@@ -6,88 +7,154 @@ class NewItem extends Component {
     super()
 
     this.state = {
-      name: 'hidden',
-      price: 'hidden',
-      amount: 'hidden',
-      desc: 'hidden'
+      name: '',
+      price: '',
+      amount: '',
+      desc: '',
+
+      message: 'hidden',
+      error: 'hidden',
+
+      displayName: 'hidden',
+      displayPrice: 'hidden',
+      dispalyAmount: 'hidden',
+      disaplyDesc: 'hidden',
+      displayType: 'hidden'
     }
 
     this.handleForm = this.handleForm.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleForm(e) {
     e.preventDefault();
+    const type = e.target.type.value
     
-    const name = e.target.name;
-    const price = e.target.price;
-    const amount = e.target.amount;
-    const desc = e.target.desc;
-
-    if (price.value <= 0) {
-      this.setState({price: 'display'});
+    if (!type) {
+      this.setState({displayType: 'display'});
       setTimeout(() => {
-        this.setState({price: 'hidden'})
-      }, 3000)
-      price.value = 0;
-    }
-
-    if (amount.value <= 0) {
-      this.setState({amount: 'display'});
-      setTimeout(() => {
-        this.setState({amount: 'hidden'})
-      }, 3000)
-      amount.value = 0;
-    }
-
-    if (!name.value.trim()) {
-      this.setState({name: 'display'});
-      setTimeout(() => {
-        this.setState({name: 'hidden'})
+        this.setState({displayType: 'hidden'})
       }, 3000)
     }
 
-    if (!desc.value.trim()) {
-      this.setState({desc: 'display'});
+    if (this.state.price <= 0) {
+      this.setState({displayPrice: 'display'});
       setTimeout(() => {
-        this.setState({desc: 'hidden'})
+        this.setState({displayPrice: 'hidden'})
       }, 3000)
     }
 
+    if (this.state.amount <= 0) {
+      this.setState({displayAmount: 'display'});
+      setTimeout(() => {
+        this.setState({displayAmount: 'hidden'})
+      }, 3000)
+    }
+    
+    if (!this.state.name.trim()) {
+      this.setState({displayName: 'display'});
+      setTimeout(() => {
+        this.setState({displayName: 'hidden'})
+      }, 3000)
+    }
 
-    console.log(name, desc, price, amount);
+    if (!this.state.desc.trim()) {
+      this.setState({disaplyDesc: 'display'});
+      setTimeout(() => {
+        this.setState({disaplyDesc: 'hidden'})
+      }, 3000)
+    }
+
+    if (this.state.price > 0 && this.state.amount > 0 && this.state.name.trim() && this.state.desc.trim()) {
+      
+      const body = {
+        name: this.state.name,
+        desc: this.state.desc,
+        amount: this.state.amount,
+        price: this.state.price
+      }
+      
+      // fetch POST request 
+      fetch(`http://localhost:3000/product/${type}/new`, {
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          method: "POST",
+          body: JSON.stringify(body)
+      })
+      .then(response => {
+        this.setState({ name: '', desc: '', amount: '', price: ''});
+        if (response.status === 201) {
+          this.setState({message: 'show'})
+          setTimeout(() => {
+            this.setState({message: 'hidden'})
+          }, 3000)
+        } else {
+          this.setState({error: 'show'});
+          setTimeout(() => {
+            this.setState({error: 'hidden'})
+          }, 3000);
+        };        
+      });
+    }    
+  }
+
+  handleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
     return (
-      <div className="form"> 
+      <div className="form">
+        <NavLink to="/" exact className='form__closeBtn'>X</NavLink>
         <div className="form__heading">
           <h2 className="form__heading-title">Add new Item</h2>
         </div>
 
         <div className="form__body">
-          <form className="form__body-form" onSubmit={this.handleForm}>
+          <form className="form__body-form" onSubmit={this.handleForm}  >
+
+            <div className="form__body-group">
+              <h3 className="form__body-group-label">Choose type</h3>
+              <div className="form__body-group-radio">
+                <label><input type="radio" name="type" value="camera"/> Camera</label>
+                <label><input type="radio" name="type" value="phone"/> Phone</label>
+                <label><input type="radio" name="type" value="tv"/> TV</label>
+              </div>
+              <h3 className={this.state.displayType}>Choose type</h3>
+            </div>
+
             <div className="form__body-group">
               <label htmlFor="name" className="form__body-group-label">Item's name</label>
-              <input type="text" placeholder="Name" id="name" className="form__body-group-input" />
-              <h3 className={this.state.name}>Name should not be empty</h3>
+              <input type="text" placeholder="Name" name="name" className="form__body-group-input" required="true"  onChange={this.handleChange} value={this.state.name} />
+              <h3 className={this.state.displayName}>Name should not be empty</h3>
             </div>
 
              <div className="form__body-group">
               <label htmlFor="price" className="form__body-group-label" >Item's price</label>
-              <input type="number" placeholder="Price" id="price" className="form__body-group-input" />
-              <h3 className={this.state.price}>Price is not correct</h3>
+              <input type="number" placeholder="Price" name="price" className="form__body-group-input" required="true" onChange={this.handleChange} value={this.state.price} />
+              <h3 className={this.state.displayPrice}>Price is not correct</h3>
             </div>
 
              <div className="form__body-group">
               <label htmlFor="amount" className="form__body-group-label">Item's amount</label>
-              <input type="number" placeholder="Amount" id="amount" className="form__body-group-input" />
-              <h3 className={this.state.amount}>Amount is not correct</h3>
+              <input type="number" placeholder="Amount" name="amount" className="form__body-group-input" required="true" onChange={this.handleChange} value={this.state.amount} />
+              <h3 className={this.state.dispalyAmount}>Amount is not correct</h3>
+            </div>
+
+            <div className={this.state.message}>
+                <h2 className='form__body-message'>Item Added Success</h2>
+            </div>
+
+             <div className={this.state.error}>
+                <h2 className='form__body-error'>Error Occur!</h2>
             </div>
 
              <div className="form__body-group">
               <label htmlFor="desc" className="form__body-group-label" >Item's description</label>
-              <textarea type="text" placeholder="Description..." id="desc" className="form__body-group-textarea" />
-              <h3 className={this.state.desc}>Description empty!</h3>
+              <textarea type="text" placeholder="Description..." name="desc" className="form__body-group-textarea" required="true" onChange={this.handleChange} value={this.state.desc} />
+              <h3 className={this.state.disaplyDesc}>Description empty!</h3>
             </div>
 
             <button type="submit" className="form__body-btn btn">Create</button>

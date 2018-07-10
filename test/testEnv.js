@@ -17,7 +17,7 @@ const items = [{
 const populateCameras = done => {
   Camera.remove({}).then(() => {
     return Camera.insertMany(items);
-  })
+  }, e => console.log(e))
   .then(() => done())
   .catch(e => console.log(e))
 };

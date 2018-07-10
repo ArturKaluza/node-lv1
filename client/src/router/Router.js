@@ -15,8 +15,8 @@ const AppRouter = () => (
       <div className="app">
         <div className='content'>
           <Switch>
-            <Route path="/" component={NewItem} exact />
-            {/* <Route path="/" component={Home} exact /> */}
+            {/* <Route path="/" component={NewItem} exact /> */}
+            <Route path="/" component={Home} exact />
             <Route path="/cameras/new" component={NewItem} />
             <Route path="/cameras" component={Cameras} />
             <Route path="/TV" component={TVs} />
