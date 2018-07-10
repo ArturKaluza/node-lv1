@@ -29,12 +29,13 @@ router.get('/', (req, res) => {
 // POST new Phone
 router.post('/new', (req, res) => {
   const {name, amount, price, desc} = req.body;
-  
-  // checking data
-  if (name === undefined || amount === undefined || price === undefined || desc === undefined) {
-    return res.status(400).send();
-  }
 
+  // checking properties
+  if (typeof name !== 'string' || name === '') return res.status(400).json({Error: 'Wrong Name'});
+  if (typeof desc !== 'string' || desc === '') return res.status(400).json({Error: 'Wrong Description'});
+  if (typeof price !== 'number' || price <= 0) return res.status(400).json({Error: 'Wrong Price'});
+  if (typeof amount !== 'number' || amount <= 0) return res.status(400).json({Error: 'wrong Amount'});
+  
   const phone = new Phone({name, amount, price, desc});
 
   phone.save().then(item => {

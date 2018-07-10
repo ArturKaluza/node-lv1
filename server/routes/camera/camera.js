@@ -47,11 +47,13 @@ router.get('/', async (req, res) => {
 router.post('/new', (req, res) => {
   const {name, amount, price, desc} = req.body;
   
-  // checking data
-  if (name === undefined || amount === undefined || price === undefined || desc === undefined) {
-    return res.status(400).json({});
-  }
+  // checking properties
+  if (typeof name !== 'string' || name === '') return res.status(400).json({Error: 'Wrong Name'});
+  if (typeof desc !== 'string' || desc === '') return res.status(400).json({Error: 'Wrong Description'});
+  if (typeof price !== 'number' || price <= 0) return res.status(400).json({Error: 'Wrong Price'});
+  if (typeof amount !== 'number' || amount <= 0) return res.status(400).json({Error: 'wrong Amount'});
 
+  // creating new item
   const camera = new Camera({name, amount, price, desc});
 
   camera.save().then(item => {
