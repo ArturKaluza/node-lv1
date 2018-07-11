@@ -3,6 +3,10 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('../db/db');
 
+const passport = require('passport');
+
+require('./passport');
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -14,6 +18,7 @@ const tv = require('./routes/TV/TV');
 const phone = require('./routes/phone/phone');
 const search = require('./routes/search/search');
 const users = require('./routes/users/users');
+const auth = require('./routes/auth/auth');
 
 // CORS enable 
 app.use(function(req, res, next) {
@@ -35,12 +40,12 @@ app.use('/product', products);
 
 app.use('/product/camera', camera);
 app.use('/product/tv', tv);
-app.use('/product/phone', phone);
+app.use('/product/phone', passport.authenticate('jwt', {session: false}), phone);
 
 app.use('/search/', search);
 
+app.use('/auth', auth);
 app.use('/users', users);
-
 
 app.listen(3000, () => {
     console.log('port: 3000');
