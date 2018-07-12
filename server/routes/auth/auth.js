@@ -22,6 +22,9 @@ router.post('/login', (req, res, next) => {
       }
       // generate token
       const token = jwt.sign(user.toJSON(), keys.secret);
+      // set token value to session storage
+      req.session.token = token;
+      
       return res.json({user, token})
     });
   })(req, res);
