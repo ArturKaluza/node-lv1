@@ -24,16 +24,16 @@ router.post('/create', (req, res) => {
               .then(doc => res.status(201).send(doc))
               .catch(e => res.status(400).send(e))
 
-          bcrypt.genSalt(10, (err, salt) => {
-            bcrypt.hash(user.password, salt, (err, hash) => {
-              if (err) throw err;
-              user.password = hash;
-              // genSalt asynchronus
-              user.save()
-              .then(doc => res.status(201).send(doc))
-              .catch(e => res.status(400).send(e))
-            })
-          })        
+          // bcrypt.genSalt(10, (err, salt) => {
+          //   bcrypt.hash(user.password, salt, (err, hash) => {
+          //     if (err) throw err;
+          //     user.password = hash;
+            //  genSalt asynchronus
+              // user.save()
+              // .then(doc => res.status(201).send(doc))
+              // .catch(e => res.status(400).send(e))
+          //   })
+          // })        
         } else {
           res.status(400).json({error: "diffrent password"})
         }

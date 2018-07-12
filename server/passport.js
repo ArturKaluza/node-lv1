@@ -1,5 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcryptjs');
 
 const Users = require('../db/models/Users');
 const keys = require('../config/keys');
@@ -9,6 +10,7 @@ passport.use(new LocalStrategy({
   usernameField: 'name',
   passwordField: 'password'
 }, (name, password, cb) => {
+  
   return Users.findOne({name, password})
     .then(user => {
       if (!user) {
