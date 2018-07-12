@@ -10,6 +10,8 @@ require('./passport');
 const app = express();
 
 app.use(bodyParser.json());
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 const products = require('./routes/products/products');
 
@@ -27,9 +29,8 @@ app.use(function(req, res, next) {
     next();
   });
 
-app.use((req, res, next) => {
-    const url = req.url;
-    next();
+app.get('/test', (req, res) => {
+    console.log(req.rawHeaders[3]);
 })
 
 app.get('/', (req, res) => {
@@ -52,3 +53,6 @@ app.listen(3000, () => {
 });
 
 module.exports = {app};
+
+
+// try use browse postman request not use localstorage to save token

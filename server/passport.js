@@ -4,6 +4,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const Users = require('../db/models/Users');
 const keys = require('../config/keys');
 
+// passport.use(passport.initialize());
 passport.use(new LocalStrategy({
   usernameField: 'name',
   passwordField: 'password'
@@ -28,12 +29,15 @@ passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
   secretOrKey: keys.secret
 }, (jwtPayload, cb) => {
-  console.log(jwtPayload)
-  return Users.findById(jwtPayload.id)
+  return Users.findById(jwtPayload._id)
     .then(user => {
+      console.log(user)
       return cb(null, user);
-    })
+   })
     .catch(err => {
       return cb(err);
-    })
+  })
 }))
+
+//authoryzation header
+// Authorization : Bearer (jwt-token) eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQ2MDk2OTJiYTQwMDAzZmMwYzJjMzUiLCJuYW1lIjoiQXJ0dXIiLCJwYXNzd29yZCI6InRlc3QxMjN0ZXN0IiwiX192IjowLCJpYXQiOjE1MzEzODI4MjR9.E67jwzuyi4mrKFYhilaFXiwm2bpVy8vw1aIuzYnC-LQ
