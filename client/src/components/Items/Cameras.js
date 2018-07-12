@@ -97,7 +97,10 @@ class Cameras extends Component {
           
           <div className="heading">
             <h3 className='items__title'>Cameras</h3>
-            <NavLink to="/cameras/new" className="heading__new btn">add new item</NavLink>
+            <div className='items__btns'>
+              <NavLink to="/cameras/new" className="heading__btns-new btn">add new item</NavLink>
+              <NavLink to="user/register" className="heading__btns-new btn">Register user</NavLink>
+            </div>            
           </div>
           {/* {Render list} */}
             {this.state.foundItems[0] ? <List list={this.state.foundItems.map(item => item._source)} />  : <List list={this.state.cameras} /> }

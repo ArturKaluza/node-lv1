@@ -10,8 +10,6 @@ require('./passport');
 const app = express();
 
 app.use(bodyParser.json());
-// app.use(passport.initialize());
-// app.use(passport.session());
 
 const products = require('./routes/products/products');
 
@@ -29,10 +27,6 @@ app.use(function(req, res, next) {
     next();
   });
 
-app.get('/test', (req, res) => {
-    console.log(req.rawHeaders[3]);
-})
-
 app.get('/', (req, res) => {
     res.send('work');
 });
@@ -41,7 +35,7 @@ app.use('/product', products);
 
 app.use('/product/camera', camera);
 app.use('/product/tv', tv);
-app.use('/product/phone', passport.authenticate('jwt', {session: false}), phone);
+app.use('/product/phone', phone);
 
 app.use('/search/', search);
 
@@ -55,4 +49,5 @@ app.listen(3000, () => {
 module.exports = {app};
 
 
-// try use browse postman request not use localstorage to save token
+//  passport middleware
+//  passport.authenticate('jwt', {session: false})

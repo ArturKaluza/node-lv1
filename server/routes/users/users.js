@@ -24,16 +24,16 @@ router.post('/create', (req, res) => {
               .then(doc => res.status(201).send(doc))
               .catch(e => res.status(400).send(e))
 
-          // bcrypt.genSalt(10, (err, salt) => {
-          //   bcrypt.hash(user.password, salt, (err, hash) => {
-          //     if (err) throw err;
-          //     user.password = hash;
-          //     // genSalt asynchronus
-          //     user.save()
-          //     .then(doc => res.status(201).send(doc))
-          //     .catch(e => res.status(400).send(e))
-          //   })
-          // })        
+          bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(user.password, salt, (err, hash) => {
+              if (err) throw err;
+              user.password = hash;
+              // genSalt asynchronus
+              user.save()
+              .then(doc => res.status(201).send(doc))
+              .catch(e => res.status(400).send(e))
+            })
+          })        
         } else {
           res.status(400).json({error: "diffrent password"})
         }
@@ -41,26 +41,26 @@ router.post('/create', (req, res) => {
     })  
 });
 
-router.post('/login', (req, res) => {
-  const { name, password } = req.body
+// router.post('/login', (req, res) => {
+//   const { name, password } = req.body
 
-  Users.findOne({name})
-    .then(user => {
-      if (!user) return res.status(404).json({error: 'User not found'});
+//   Users.findOne({name})
+//     .then(user => {
+//       if (!user) return res.status(404).json({error: 'User not found'});
 
-      // compare password
-      bcrypt.compare(password, user.password)
-        .then(bool => {
-          if (!bool) {
-            res.status(400).json({error: 'Password or login not correct'});
-          }
-          // if true then authenticate
-          res.json({msg: 'Auth true'})
-        })
+//       // compare password
+//       bcrypt.compare(password, user.password)
+//         .then(bool => {
+//           if (!bool) {
+//             res.status(400).json({error: 'Password or login not correct'});
+//           }
+//           // if true then authenticate
+//           res.json({msg: 'Auth true'})
+//         })
 
-    })
-    .catch(e => res.status(400).send(e))
+//     })
+//     .catch(e => res.status(400).send(e))
 
-})
+// })
 
 module.exports = router;
