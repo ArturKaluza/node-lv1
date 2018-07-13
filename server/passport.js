@@ -33,7 +33,6 @@ passport.use(new JWTStrategy({
 }, (jwtPayload, cb) => {
   return Users.findById(jwtPayload._id)
     .then(user => {
-      console.log(user)
       return cb(null, user);
    })
     .catch(err => {
@@ -41,5 +40,5 @@ passport.use(new JWTStrategy({
   })
 }))
 
-//authoryzation header
+//authoryzation header example
 // Authorization : Bearer (jwt-token) eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQ2MDk2OTJiYTQwMDAzZmMwYzJjMzUiLCJuYW1lIjoiQXJ0dXIiLCJwYXNzd29yZCI6InRlc3QxMjN0ZXN0IiwiX192IjowLCJpYXQiOjE1MzEzODI4MjR9.E67jwzuyi4mrKFYhilaFXiwm2bpVy8vw1aIuzYnC-LQ

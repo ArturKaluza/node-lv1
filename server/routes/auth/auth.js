@@ -8,7 +8,6 @@ const keys = require('../../../config/keys');
 router.post('/login', (req, res, next) => {
   
   passport.authenticate('local', {session: false}, (err, user, info) => {
-    
     if (err || !user) {
       res.status(400).json({
         message: 'somthing bad happend',

@@ -25,6 +25,11 @@ const Navigation = (props) => (
         </ul>
       </div>
 
+      <div className='nav__btns'>
+        {!!sessionStorage.getItem('token') ? <button className="nav__btns-login logout" onClick={props.logout}>Log-out</button> : <NavLink to='/user/login' className="nav__btns-login">Log-in</NavLink>}
+        
+      </div>
+
     </div>
   </nav>
 )

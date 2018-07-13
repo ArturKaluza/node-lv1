@@ -14,6 +14,7 @@ class Cameras extends Component {
     this.paginationPrevius = this.paginationPrevius.bind(this);
     this.handleItemPerPage = this.handleItemPerPage.bind(this);
     this.fetchData = this.fetchData.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
    
     this.state = {
       cameras: [],
@@ -42,10 +43,12 @@ class Cameras extends Component {
   
   // fetch data from DB
   componentDidMount() {
+    console.log(sessionStorage.getItem('token'))
     this.fetchData();
   }
 
   fetchData() {
+    
     fetch(`http://localhost:3000/product/camera?page=1&limit=${this.state.itemPerPage}`)
      .then(res => res.json())
      .then(data => {
@@ -87,10 +90,15 @@ class Cameras extends Component {
     this.setState({itemPerPage: value}, () => this.fetchData());
   }
 
+  handleLogout() {
+    sessionStorage.removeItem('token');
+    this.forceUpdate();
+  }
+
   render() {
     return (
       <div className='layout'>
-        <Navigation onItemPerPage={this.handleItemPerPage}/>
+        <Navigation onItemPerPage={this.handleItemPerPage} logout={this.handleLogout}/>
         
         <div className='items'>
           <SearchBar onSearch={this.handleInputChange}/>
@@ -98,7 +106,8 @@ class Cameras extends Component {
           <div className="heading">
             <h3 className='items__title'>Cameras</h3>
             <div className='items__btns'>
-              <NavLink to="/cameras/new" className="heading__btns-new btn">add new item</NavLink>
+            {!!sessionStorage.getItem('token') && <NavLink to="/cameras/new" className="heading__btns-new btn">add new item</NavLink>}
+              
               <NavLink to="user/register" className="heading__btns-new btn">Register user</NavLink>
             </div>            
           </div>

@@ -40,7 +40,11 @@ router.get('/', (req, res) => {
 
 // create 
 router.post('/new', (req, res) => {
-  const {name, amount, price, desc} = req.body;
+  const {name, desc} = req.body;
+  let {price, amount} = req.body;
+  
+  price = parseInt(price);
+  amount = parseInt(amount);
   
   // checking properties
   if (typeof name !== 'string' || name === '') return res.status(400).json({Error: 'Wrong Name'});

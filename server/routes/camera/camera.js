@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 // import camera model
 const {Camera} = require('../../../db/models/Camera');
@@ -41,12 +42,15 @@ router.get('/', async (req, res) => {
     }
   }  
 });
-  
-  
+    
 // create new Camera
-router.post('/new', (req, res) => {
-  const {name, amount, price, desc} = req.body;
+router.post('/new', passport.authenticate('jwt', {session: false}), (req, res) => {
+  const {name, desc} = req.body;
+  let {price, amount} = req.body;
   
+  price = parseInt(price);
+  amount = parseInt(amount);
+
   // checking properties
   if (typeof name !== 'string' || name === '') return res.status(400).json({Error: 'Wrong Name'});
   if (typeof desc !== 'string' || desc === '') return res.status(400).json({Error: 'Wrong Description'});

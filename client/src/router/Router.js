@@ -10,19 +10,21 @@ import NotFound from '../components/NotFound/NotFound';
 import Products from '../components/Products/Products';
 import NewItem from '../components/NewItem/NewItem';
 import RegisterUser from '../components/RegisterUser/RegisterUser';
+import LoginUser from '../components/LoginUser/LoginUser';
 
 const AppRouter = () => (
     <BrowserRouter>
       <div className="app">
         <div className='content'>
           <Switch>
-            {/* <Route path="/" component={RegisterUser} exact /> */}
+            {/* <Route path="/" component={LoginUser} exact /> */}
             <Route path="/" component={Home} exact />
             <Route path="/cameras/new" component={NewItem} />
             <Route path="/cameras" component={Cameras} />
             <Route path="/TV" component={TVs} />
             <Route path="/phones" component={Phones} />
             <Route path="/product" component={Products} />
+            <Route path='/user/login' component={LoginUser} />
             <Route path="/user/register" component={RegisterUser} />
             <Route path='*' exact={true} component={NotFound} />
           </Switch>

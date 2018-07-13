@@ -78,7 +78,8 @@ class NewItem extends Component {
       fetch(`http://localhost:3000/product/${type}/new`, {
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            "Authorization": sessionStorage.getItem('token')
           },
           method: "POST",
           body: JSON.stringify(body)

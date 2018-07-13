@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 const {Phone} = require('../../../db/models/Phone');
 
@@ -27,8 +28,12 @@ router.get('/', (req, res) => {
 });
 
 // POST new Phone
-router.post('/new', (req, res) => {
-  const {name, amount, price, desc} = req.body;
+router.post('/new', passport.authenticate('jwt', {session: false}), (req, res) => {
+  const {name, desc} = req.body;
+  let {price, amount} = req.body;
+  
+  price = parseInt(price);
+  amount = parseInt(amount);
 
   // checking properties
   if (typeof name !== 'string' || name === '') return res.status(400).json({Error: 'Wrong Name'});
@@ -91,18 +96,3 @@ router.patch('/:id', (req, res) => {
 })
 
 module.exports = router;
-
-const add20Phone = () => {
-  const phone = [];
-
-  for (let i = 0; i < 20; i++) {
-    phone.push({
-      name: 'Phone item' + i,
-      amount: 100,
-      price: 99,
-      desc: 'amazing item phone ' + i
-    });
-  }
-
-  return phone;
-};
