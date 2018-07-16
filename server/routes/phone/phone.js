@@ -62,7 +62,7 @@ router.get('/:id', (req, res) => {
 });
 
 // delete one item by id
-router.delete('/:id', (req, res) => {
+router.delete('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
   const id = req.params.id;
 
   Phone.findByIdAndRemove(id).then(item => {

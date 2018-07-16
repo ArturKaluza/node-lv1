@@ -5,6 +5,7 @@
   border: 1px solid #aaa;
   padding: 10px;
   transition: all .3s ease;
+  position: relative;
 
   &:hover {
     border-color: #277554;
@@ -80,5 +81,28 @@
   &-text {
     font-size: 20px;
     font-weight: 400;
+  }
+}
+
+.camera__closeBtn {
+  border: none;
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  transition: .3s ease;
+
+  &:hover {
+    color: #fff;
+    background: darken(#e74c3c, 15%);
+  }
+
+  & > .fa-times {
+    width: 30px;
+    height: 30px;
+    line-height: 28px;
+    border: 1px solid #000;
+    border-radius: 3px;
+    background: #e74c3c;
+    font-size: 26px;
   }
 }

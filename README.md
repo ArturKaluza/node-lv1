@@ -1,5 +1,5 @@
 # node-task
-This project is building for learning who MERN stack works.
+This project is building for learning how MERN stack works.
 
 ## Getting Started
 Ts start develop this project you need clone or download this repozytory

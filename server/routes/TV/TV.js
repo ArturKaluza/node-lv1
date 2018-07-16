@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 const {TV} = require('../../../db/models/TV');
 
@@ -73,7 +74,7 @@ router.get('/:id', (req, res) => {
 });
 
 // delete one item by id
-router.delete('/:id', (req, res) => {
+router.delete('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
   const id = req.params.id;
 
   TV.findByIdAndRemove(id).then(item => {

@@ -24,3 +24,8 @@ dodać formularz do tworzenie konta
 
 // Client
 login otrzymujemy token 
+
+
+// Poprawic login user form 
+if unautorize then not redirect
+

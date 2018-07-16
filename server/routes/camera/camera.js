@@ -82,15 +82,19 @@ router.get('/:id', async (req, res) => {
 })
 
 // delete one item by id
-router.delete('/:id', (req, res) => {
+router.delete('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
   const id = req.params.id;
 
   Camera.findByIdAndRemove(id).then(item => {
     if (!item) {
-      return res.status(404).send();
+      return res.status(404).json({error: 'Item not found'});
     }
-
-    return res.send();
+    // reomving item from elasticSearch
+    item.unIndex(err => {
+      if (err) res.status(400).send(err);
+    });
+    
+    return res.status(200).end();
   }, e => res.send(400).send(e));
 });
 

@@ -12,6 +12,8 @@ const List = (props) => {
           amount={item.amount}
           price={item.price}
           desc={item.desc}
+          id={item._id}
+          deleteItem={props.deleteItem}
         />
       )}
     </ul>

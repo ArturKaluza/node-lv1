@@ -15,6 +15,8 @@ class Cameras extends Component {
     this.handleItemPerPage = this.handleItemPerPage.bind(this);
     this.fetchData = this.fetchData.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
+    this.checkAuth = this.checkAuth.bind(this);
+    this.handleDeleteItem = this.handleDeleteItem.bind(this);
    
     this.state = {
       cameras: [],
@@ -22,7 +24,8 @@ class Cameras extends Component {
       currentPage: 1,
       pages: null,
       itemPerPage: 4,
-      foundItems: []
+      foundItems: [],
+      auth: false
     }
   }
   
@@ -43,8 +46,9 @@ class Cameras extends Component {
   
   // fetch data from DB
   componentDidMount() {
-    console.log(sessionStorage.getItem('token'))
     this.fetchData();
+    this.checkAuth();
+
   }
 
   fetchData() {
@@ -59,6 +63,28 @@ class Cameras extends Component {
       })
     })
      .catch(e => console.log(e));
+  }
+
+  checkAuth() {
+    const token = sessionStorage.getItem('token')
+    token !== null ? this.setState({auth: true}) : this.setState({auth: false});
+  }
+
+  handleDeleteItem(id) {
+    fetch(`http://localhost:3000/product/camera/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('token')
+      }
+    })
+    .then(res => {
+      if (res.status === 200) {
+        const filteredState = this.state.cameras.filter(item => item._id !== id);
+        this.setState({cameras: filteredState});
+      }
+    });
   }
 
   paginationPrevius() {
@@ -92,7 +118,7 @@ class Cameras extends Component {
 
   handleLogout() {
     sessionStorage.removeItem('token');
-    this.forceUpdate();
+    this.setState({auth: false});    
   }
 
   render() {
@@ -112,7 +138,7 @@ class Cameras extends Component {
             </div>            
           </div>
           {/* {Render list} */}
-            {this.state.foundItems[0] ? <List list={this.state.foundItems.map(item => item._source)} />  : <List list={this.state.cameras} /> }
+            {this.state.foundItems[0] ? <List list={this.state.foundItems.map(item => item._source)} />  : <List list={this.state.cameras} deleteItem={this.handleDeleteItem } /> }
           
 
           <div className='items__btn'>

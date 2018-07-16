@@ -9,8 +9,8 @@ router.post('/login', (req, res, next) => {
   
   passport.authenticate('local', {session: false}, (err, user, info) => {
     if (err || !user) {
-      res.status(400).json({
-        message: 'somthing bad happend',
+      res.status(404).json({
+        message: 'Wrong user name or password',
         user: user
       })
     }
