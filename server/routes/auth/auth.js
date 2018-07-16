@@ -8,6 +8,7 @@ const keys = require('../../../config/keys');
 router.post('/login', (req, res, next) => {
   
   passport.authenticate('local', {session: false}, (err, user, info) => {
+    
     if (err || !user) {
       res.status(404).json({
         message: 'Wrong user name or password',

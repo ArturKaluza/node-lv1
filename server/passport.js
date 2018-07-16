@@ -1,6 +1,6 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 
 const Users = require('../db/models/Users');
 const keys = require('../config/keys');
@@ -10,8 +10,10 @@ passport.use(new LocalStrategy({
   usernameField: 'name',
   passwordField: 'password'
 }, (name, password, cb) => {
+  // hash login password
+  const hash = crypto.createHmac('sha256', password).digest('hex');
   
-  return Users.findOne({name, password})
+  return Users.findOne({name, password: hash})
     .then(user => {
       if (!user) {
         return cb(null, false, {message: 'Inccorect message or password'})
