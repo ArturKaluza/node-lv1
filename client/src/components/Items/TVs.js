@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
 import style from './Items.scss';
+import { NavLink } from 'react-router-dom';
 
 import SearchBar from '../SearchBar/SearchBar';
 import Navigation from '../Navigation/Nav';
@@ -14,6 +14,9 @@ class TVs extends Component {
     this.paginationPrevius = this.paginationPrevius.bind(this);
     this.handleItemPerPage = this.handleItemPerPage.bind(this);
     this.fetchData = this.fetchData.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
+    this.checkAuth = this.checkAuth.bind(this);
+    this.handleDeleteItem = this.handleDeleteItem.bind(this);
    
     this.state = {
       tvs: [],
@@ -21,7 +24,8 @@ class TVs extends Component {
       currentPage: 1,
       pages: null,
       itemPerPage: 4,
-      foundItems: []
+      foundItems: [],
+      auth: false
     }
   }
   
@@ -43,6 +47,7 @@ class TVs extends Component {
   // fetch data from DB
   componentDidMount() {
     this.fetchData();
+    this.checkAuth();
   }
 
   fetchData() {
@@ -56,6 +61,28 @@ class TVs extends Component {
       })
     })
      .catch(e => console.log(e));
+  }
+
+  checkAuth() {
+    const token = sessionStorage.getItem('token')
+    token !== null ? this.setState({auth: true}) : this.setState({auth: false});
+  }
+
+  handleDeleteItem(id) {
+    fetch(`http://localhost:3000/product/camera/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': sessionStorage.getItem('token')
+      }
+    })
+    .then(res => {
+      if (res.status === 200) {
+        const filteredState = this.state.phones.filter(item => item._id !== id);
+        this.setState({phones: filteredState});
+      }
+    });
   }
 
   paginationPrevius() {
@@ -87,6 +114,11 @@ class TVs extends Component {
     this.setState({itemPerPage: value}, () => this.fetchData());
   }
 
+  handleLogout() {
+    sessionStorage.removeItem('token');
+    this.setState({auth: false});    
+  }
+
   render() {
     return (
       <div className='layout'>
@@ -97,11 +129,15 @@ class TVs extends Component {
           
           <div className="heading">
             <h3 className='items__title'>TVs</h3>
-            <NavLink to="/cameras/new" className="heading__new btn">add new item</NavLink>
+            <div className='items__btns'>
+            {!!sessionStorage.getItem('token') && <NavLink to="/cameras/new" className="heading__btns-new btn">add new item</NavLink>}
+              
+              <NavLink to="user/register" className="heading__btns-new btn">Register user</NavLink>
+            </div>            
           </div>
           
           {/* {Render list} */}
-            {this.state.foundItems[0] ? <List list={this.state.foundItems.map(item => item._source)} />  : <List list={this.state.tvs} /> }
+            {this.state.foundItems[0] ? <List list={this.state.foundItems.map(item => item._source)} />  : <List list={this.state.tvs} deleteItem={this.handleDeleteItem } /> }
           
 
           <div className='items__btn'>

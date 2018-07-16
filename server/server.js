@@ -31,11 +31,6 @@ app.use((req, res, next) => {
     next()
 });
 
-// app.use((req, res, next) => {
-//     console.log(req.session);
-//     next();
-// })
-
 const products = require('./routes/products/products');
 
 const camera = require('./routes/camera/camera');
@@ -49,10 +44,6 @@ const auth = require('./routes/auth/auth');
 app.get('/', (req, res) => {
     res.send('work');
 });
-
-// app.get('/test2', passport.authenticate('jwt', {session: false}), (req, res) => {
-//     res.send({msg: 'protect'});
-// })
 
 app.use('/product', products);
 
