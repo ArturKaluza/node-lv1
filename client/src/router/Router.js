@@ -11,6 +11,7 @@ import Products from '../components/Products/Products';
 import NewItem from '../components/NewItem/NewItem';
 import RegisterUser from '../components/RegisterUser/RegisterUser';
 import LoginUser from '../components/LoginUser/LoginUser';
+import UsersAll from '../components/UsersAll/UsersAll';
 
 const AppRouter = () => (
     <BrowserRouter>
@@ -24,8 +25,11 @@ const AppRouter = () => (
             <Route path="/TV" component={TVs} />
             <Route path="/phones" component={Phones} />
             <Route path="/product" component={Products} />
+
             <Route path='/user/login' component={LoginUser} />
             <Route path="/user/register" component={RegisterUser} />
+            <Route path="/user/all" component={UsersAll} />
+
             <Route path='*' exact={true} component={NotFound} />
           </Switch>
         </div>

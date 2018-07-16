@@ -71,7 +71,7 @@ class Phones extends Component {
   }
 
   handleDeleteItem(id) {
-    fetch(`http://localhost:3000/product/camera/${id}`, {
+    fetch(`http://localhost:3000/product/phone/${id}`, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',

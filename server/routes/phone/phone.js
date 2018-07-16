@@ -69,7 +69,11 @@ router.delete('/:id', passport.authenticate('jwt', {session: false}), (req, res)
     if (!item) {
       return res.status(404).send();
     }
-
+     // reomving item from elasticSearch
+     item.unIndex(err => {
+      if (err) res.status(400).send(err);
+    });
+    
     return res.send();
   }, e => res.send(400).send(e));
 });

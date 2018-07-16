@@ -69,7 +69,7 @@ class TVs extends Component {
   }
 
   handleDeleteItem(id) {
-    fetch(`http://localhost:3000/product/camera/${id}`, {
+    fetch(`http://localhost:3000/product/tv/${id}`, {
       method: 'DELETE',
       headers: {
         'Accept': 'application/json',
@@ -79,8 +79,8 @@ class TVs extends Component {
     })
     .then(res => {
       if (res.status === 200) {
-        const filteredState = this.state.phones.filter(item => item._id !== id);
-        this.setState({phones: filteredState});
+        const filteredState = this.state.tvs.filter(item => item._id !== id);
+        this.setState({tvs: filteredState});
       }
     });
   }
