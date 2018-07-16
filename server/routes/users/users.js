@@ -4,6 +4,17 @@ const crypto = require('crypto');
 
 const Users = require('../../../db/models/Users');
 
+// Get all users
+router.get('/', async (req, res) => {
+  try {
+  const docs = await Users.find({});
+  res.send(docs);
+  } catch (e) {
+    res.status(400).send(e);
+  }  
+})
+
+
 // Add new User
 router.post('/create', (req, res) => {
   const {name, password1, password2} = req.body;
