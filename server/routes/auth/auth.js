@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const keys = require('../../../config/keys');
 
+const  Users = require('../../../db/models/Users');
+
 // POST login
 router.post('/login', (req, res, next) => {
   
@@ -16,6 +18,10 @@ router.post('/login', (req, res, next) => {
       })
     }
 
+    // update users model lastLogin property
+    Users.findOneAndUpdate({name: user.name}, {lastLogin: Date.now()}, {new: true})
+      .catch(e => res.status(400).send(e));
+
     req.login(user, {session: false}, err => {
       if (err) {
         res.send(err)
@@ -24,8 +30,8 @@ router.post('/login', (req, res, next) => {
       const token = jwt.sign(user.toJSON(), keys.secret);
       // set token value to session storage
       req.session.token = token;
-      
-      return res.json({user, token})
+
+      return res.json({user, token}) 
     });
   })(req, res);
 });

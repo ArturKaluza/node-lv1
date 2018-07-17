@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const crypto = require('crypto');
+const passport = require('passport');
 
 const Users = require('../../../db/models/Users');
 
@@ -41,5 +42,21 @@ router.post('/create', (req, res) => {
       }
     })  
 });
+
+// delete user
+router.delete('/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+  const id = req.params.id;
+
+  Users.findByIdAndRemove(id)
+    .then(doc => {
+      if (!doc) {
+        res.status(404).json({error: 'User not found'});
+      }
+      res.json({mag: 'delete success'})
+    
+    })
+    .catch(e => res.status(400).send(e))
+
+})
 
 module.exports = router;
