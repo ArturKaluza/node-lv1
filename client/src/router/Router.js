@@ -30,7 +30,7 @@ const AppRouter = () => (
             <Route path="/user/register" component={RegisterUser} />
             <Route path="/user/all" component={UsersAll} />
 
-            <Route path='*' exact={true} component={NotFound} />
+            <Route path='*' component={NotFound} />
           </Switch>
         </div>
       </div>

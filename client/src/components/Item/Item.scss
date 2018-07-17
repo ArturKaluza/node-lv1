@@ -10,6 +10,8 @@
   &:hover {
     border-color: #277554;
     outline: 3px solid #277554;
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px #444;
   }
 
   &:hover > &__cart {

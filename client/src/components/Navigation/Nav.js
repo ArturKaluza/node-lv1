@@ -11,7 +11,7 @@ const Navigation = (props) => (
         <NavLink to="/cameras" className="nav__list-item" activeClassName="is-active">Cameras</NavLink>
         <NavLink to="/tv" className="nav__list-item" activeClassName="is-active">TVs</NavLink>
         <NavLink to="/phones" className="nav__list-item" activeClassName="is-active">Phones</NavLink>
-        <NavLink to="/tam" className="nav__list-item" activeClassName="is-active">Not Found</NavLink>
+        {/* <NavLink to="/tam" className="nav__list-item" activeClassName="is-active">Not Found</NavLink> */}
         <NavLink to="/product" className="nav__list-prod" activeClassName="is-active">All</NavLink>
       </ul>
       

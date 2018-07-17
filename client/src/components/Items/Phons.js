@@ -132,8 +132,8 @@ class Phones extends Component {
           <div className="heading">
             <h3 className='items__title'>Phones</h3>
             <div className='items__btns'>
-            {!!sessionStorage.getItem('token') && <NavLink to="/cameras/new" className="heading__btns-new btn">add new item</NavLink>}
-              
+              {!!sessionStorage.getItem('token') && <NavLink to="/cameras/new" className="heading__btns-new btn">add new item</NavLink>}
+              {!!sessionStorage.getItem('token') && <NavLink to="/user/all" className="heading__btns-new btn">See all users</NavLink>}
               <NavLink to="user/register" className="heading__btns-new btn">Register user</NavLink>
             </div>            
           </div>

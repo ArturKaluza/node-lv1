@@ -23,11 +23,29 @@ const items = [{
 }];
 
 const populateCameras = done => {
-  Camera.remove({}).then(() => {
-    return Camera.insertMany(items);
-  })
-  .then(() => done())
-  .catch(e => console.log(e))
-};
+  console.log('start')
+  Camera.remove({})
+    .then(() => {
+      console.log('second') 
+      Camera.insertMany(items)
+      })
+    .then(() => {
+      console.log('done')
+      done()
+    })
+    .catch(e => console.log(e))
+  }  
+
+//   const populateCameras = (done) => {
+//     Camera.remove({})
+//       .then(() => {
+//         return Camera.insertMany(items)
+//                 .then(() => done())
+//       })
+//       .catch(() => {
+//         done();
+//       });
+// };
+
 
 module.exports = { items, populateCameras, itemsOneId, itemsTwoId };

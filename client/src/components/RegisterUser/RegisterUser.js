@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {NavLink} from 'react-router-dom';
+import { NavLink, Redirect } from 'react-router-dom';
 import style from './RegisterUser.scss';
 
 class RegisterUser extends Component {
@@ -16,6 +16,7 @@ class RegisterUser extends Component {
       boxClass: '',
 
       success: 'hidden',
+      redirect: false
       
     }
 
@@ -46,10 +47,10 @@ class RegisterUser extends Component {
     .then(response => {
       // checking response status
       if (response.status === 201) {
-        this.setState({alertValue: 'Success', boxClass: 'form__body-message', alert: 'show'})
+        this.setState({alertValue: 'Success, please login', boxClass: 'form__body-message', alert: 'show'})
         
         setTimeout(() => {
-          this.setState({alert: 'hidden'})
+          this.setState({alert: 'hidden', redirect: true})
         }, 3000)
       } else {
         this.setState({alertValue: 'User alredy exsist', boxClass: 'form__body-error', alert: 'show'});
@@ -122,6 +123,8 @@ class RegisterUser extends Component {
           <div className={this.state.alert}>
                <h2 className={this.state.boxClass}>{this.state.alertValue}</h2>
            </div>         
+
+          {this.state.redirect ? <Redirect to='/user/login' /> : false }    
 
           <button type="submit" className="form__body-btn btn">Submit</button>
           

@@ -7,19 +7,35 @@ const Camera = require('../../../db/models/Camera');
 
 const {populateCameras, items, itemsOneId, itemsTwoId} = require('../../../test/testEnv');
 
-before(populateCameras);
+//before(populateCameras);
+//beforeEach(() => console.log('DB preper'))
 
 describe('Camera', () => {
+//   it('POST should create new camera', (done) => {
+//     const item = {
+//       name: 'test item',
+//       desc: 'test item',
+//       price: 10,
+//       amount: 20
+
+    
+    
+// //     }
+
+
+
   it('GET should return all items', (done) => {
     request
       .get('/product/camera')
       .expect(200)
       .expect(res => {
-        chai.expect(res.body.length).to.equal(2);
+        console.log(res);
+        chai.assert(res.body.length).to.equal(100);
       })
       .end(done()) 
   });
 
+  
   it('GET should return 404', (done) => {
     request
       .get(`/product/camera/5b4c8ad2dd899a05383c4521`)
@@ -29,13 +45,18 @@ describe('Camera', () => {
 
   it('GET should return one item', done => {
     const id = items[0]._id.toHexString().trim();
-    console.log(id)
-
+    
     request
       .get(`/product/camera/${id}`)
       .expect(200)
+      .expect(res => {
+        console.log(res)
+        chai.expect(res.body).to.be('object');
+        chai.expect(res.body).to.be('string');
+      })
       .end(done());
   })
+})
 
   // it('GET should return one item', (done) => {
   //   request
@@ -69,5 +90,5 @@ describe('Camera', () => {
   //     })
   //     .end(done())      
   //   });
-});
+// });
 
