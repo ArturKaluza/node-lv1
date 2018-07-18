@@ -2,19 +2,19 @@ const {app} = require('../../server');
 const request = require('supertest');
 const assert = require('chai').assert;
 
-const {Camera} = require('../../../db/models/Camera');
+const {Phone} = require('../../../db/models/Phone');
 
 
-const { items, populateCameras, auth, loginUser } = require('../../../test/testEnv');
+const { items, populatePhones, auth, loginUser } = require('../../../test/testEnv');
 
 before(loginUser(auth))
-before(populateCameras);
+before(populatePhones);
 
 // start testing
-describe('Camera', () => {
-  it('GET should return all cameras', (done) => {
+describe('Phone', () => {
+  it('GET should return all phones', (done) => {
     request(app)
-      .get('/product/camera')
+      .get('/product/phone')
       .expect(200)
       .expect(res => {
         assert.equal(res.body[0].price, 29, 'correct');
@@ -26,7 +26,7 @@ describe('Camera', () => {
 
   it('GET should return one item', (done) => {
     request(app)
-      .get(`/product/camera/${items[1]._id}`)
+      .get(`/product/phone/${items[1]._id}`)
       .expect(200)
       .expect(res => {
         assert.equal(res.body.name, 'test item2', 'compare name');
@@ -38,13 +38,13 @@ describe('Camera', () => {
 
   it('GET should return status 404', done => {
     request(app)
-      .get('/product/camera/5b4dd3ad9557fe1898cd5eaa')
+      .get('/product/phone/5b4dd3ad9557fe1898cd5eaa')
       .expect(404)
       .end(done);
   });
 
   it('POST should not create item 401', done => {
-    const camera = {
+    const phone = {
       name: 'test',
       desc: 'test',
       price: 34,
@@ -52,14 +52,14 @@ describe('Camera', () => {
     }
     
     request(app)
-      .post('/product/camera/new')
-      .send(camera)
+      .post('/product/phone/new')
+      .send(phone)
       .expect(401)
       .end(done);
   })
 
   it('POST should create item', done => {
-    const camera = {
+    const phone = {
       name: 'test',
       desc: 'test',
       price: 34,
@@ -67,9 +67,9 @@ describe('Camera', () => {
     }
 
     request(app)
-      .post('/product/camera/new')
+      .post('/product/phone/new')
       .set('Authorization', 'bearer ' + auth.token)
-      .send(camera)
+      .send(phone)
       .expect(201)
       .expect(res => {
         assert.equal(res.body.name, 'test');
@@ -88,13 +88,13 @@ describe('Camera', () => {
     }
 
     request(app)
-      .post('/product/camera/new')
+      .post('/product/phone/new')
       .set('Authorization', 'bearer ' + auth.token)
       .send(testItem)
       .expect(201)
       .end(done);
       
-      Camera.find({})
+      Phone.find({})
         .then((docs) => {
           assert.equal(docs.length, 3)
         })
@@ -105,7 +105,7 @@ describe('Camera', () => {
   
   it('DELETE should delete one item', done => {
     request(app)
-      .delete(`/product/camera/${items[1]._id}`)
+      .delete(`/product/phone/${items[1]._id}`)
       .set('Authorization', 'bearer ' + auth.token)
       .expect(200)
       .end(done);

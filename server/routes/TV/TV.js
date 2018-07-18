@@ -40,7 +40,7 @@ router.get('/', (req, res) => {
 });
 
 // create 
-router.post('/new', (req, res) => {
+router.post('/new', passport.authenticate('jwt', {session: false}), (req, res) => {
   const {name, desc} = req.body;
   let {price, amount} = req.body;
   
