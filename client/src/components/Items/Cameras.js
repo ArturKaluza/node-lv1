@@ -17,7 +17,7 @@ class Cameras extends Component {
     this.handleLogout = this.handleLogout.bind(this);
     this.checkAuth = this.checkAuth.bind(this);
     this.handleDeleteItem = this.handleDeleteItem.bind(this);
-   
+       
     this.state = {
       cameras: [],
       inputVal: '',
@@ -48,7 +48,6 @@ class Cameras extends Component {
   componentDidMount() {
     this.fetchData();
     this.checkAuth();
-
   }
 
   fetchData() {
@@ -130,7 +129,7 @@ class Cameras extends Component {
           <SearchBar onSearch={this.handleInputChange}/>
           
           <div className="heading">
-            <h3 className='items__title'>Cameras</h3>
+            <h3 className='items__title'><span>C</span><span>a</span><span>m</span><span>e</span><span>r</span><span>a</span><span>s</span></h3>
             <div className='items__btns'>
               {!!sessionStorage.getItem('token') && <NavLink to="/cameras/new" className="heading__btns-new btn">add new item</NavLink>}
               {!!sessionStorage.getItem('token') && <NavLink to="/user/all" className="heading__btns-new btn">See all users</NavLink>}
