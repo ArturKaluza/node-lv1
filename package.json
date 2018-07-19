@@ -8,6 +8,7 @@
     "start-env": "docker-compose up",
     "start-server": "nodemon server/server",
     "start-test": "set NODE_ENV=test&&mocha server/**/*.test.js",
+    "test": "npm run start-test && cd client && npm test",
     "install-all": "npm install && npm run client-install",
     "client-install": "cd client && npm install",
     "client": "cd client && npm start"

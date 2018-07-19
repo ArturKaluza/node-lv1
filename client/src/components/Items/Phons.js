@@ -130,7 +130,7 @@ class Phones extends Component {
           <SearchBar onSearch={this.handleInputChange}/>
           
           <div className="heading">
-            <h3 className='items__title'>Phones</h3>
+            <h3 className='items__title'><span>P</span><span>h</span><span>o</span><span>n</span><span>e</span><span>s</span></h3>
             <div className='items__btns'>
               {!!sessionStorage.getItem('token') && <NavLink to="/cameras/new" className="heading__btns-new btn">add new item</NavLink>}
               {!!sessionStorage.getItem('token') && <NavLink to="/user/all" className="heading__btns-new btn">See all users</NavLink>}

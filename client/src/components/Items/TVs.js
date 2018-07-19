@@ -128,7 +128,7 @@ class TVs extends Component {
           <SearchBar onSearch={this.handleInputChange}/>
           
           <div className="heading">
-            <h3 className='items__title'>TVs</h3>
+            <h3 className='items__title'><span>T</span><span>V</span><span>s</span></h3>
             <div className='items__btns'>
               {!!sessionStorage.getItem('token') && <NavLink to="/cameras/new" className="heading__btns-new btn">add new item</NavLink>}
               {!!sessionStorage.getItem('token') && <NavLink to="/user/all" className="heading__btns-new btn">See all users</NavLink>}
