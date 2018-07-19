@@ -62,7 +62,7 @@ class Cameras extends Component {
         pages: data.pages
       })
     })
-     .catch(e => console.log(e));
+     .catch(e => e);
   }
 
   checkAuth() {

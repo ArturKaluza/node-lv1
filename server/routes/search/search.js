@@ -11,6 +11,14 @@ router.get('/:name', (req, res) => {
         }
       }
     }
+
+  //  const data = {
+  //   "query": {
+  //     "regexp":{
+  //       "name": req.params.name + ".*"
+  //       }
+  //     }
+  //   } 
     
     fetch(`http://localhost:9200/_search`, {
       method: 'POST', 

@@ -23,7 +23,7 @@ class UsersAll extends Component {
     fetch('http://localhost:3000/users')
       .then(data => data.json())
       .then(res => this.setState({users: res}))
-      .catch(e => console.log(e)); 
+      .catch(e => e); 
   }
 
   deleteUser(id) {
