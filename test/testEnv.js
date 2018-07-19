@@ -1,10 +1,12 @@
 const { ObjectID } = require('mongodb')
 const request = require('supertest');
 const {app} = require('../server/server');
+const crypto = require('crypto');
 
 const {Camera} = require('../db/models/Camera');
 const {Phone} = require('../db/models/Phone');
 const {TV} = require('../db/models/TV');
+const Users = require('../db/models/Users');
 
 const itemsOneId = new ObjectID();
 const itemsTwoId = new ObjectID();
@@ -22,6 +24,49 @@ const items = [{
   amount: 50,
   desc: 'test item2'
 }];
+
+// removing all users from DB
+const refreshUsers = () => {
+  Users.remove({})
+    .then(() => {
+      checkUser();
+      checkUser1();
+    })
+    .catch(e => console.log(e));
+}
+
+refreshUsers();
+
+// create user for login
+const checkUser = () => {
+  Users.find({name: 'Test'})
+    .then(doc => {
+      if (doc.length < 1) {
+        // hashing password to compare when user login
+        const password = crypto.createHmac('sha256', 'test123').digest('hex');
+
+        const user = new Users({name: 'Test', password})
+
+        user.save()
+      }
+      return;
+    })
+}
+
+// create user for deleting test
+const checkUser1 = () => {
+  Users.find({})
+    .then(doc => {
+      if (doc.length < 2) {
+        const password = crypto.createHmac('sha256', 'test123').digest('hex');
+
+        const user = new Users({name: 'Nowy', password})
+
+        user.save()
+      }
+      return;
+    })
+}
 
 // initialize object to get user id
 const user = {};
@@ -62,7 +107,7 @@ function loginUser(auth) {
   };
 }
 
-const populateCameras = (done) => {
+const refreshCameras = (done) => {
   Camera.remove({})
     .then(() => {
       return Camera.insertMany(items);
@@ -70,7 +115,7 @@ const populateCameras = (done) => {
     .then(() => done());
 };
 
-const populatePhones = (done) => {
+const refreshPhones = (done) => {
   Phone.remove({})
     .then(() => {
       return Phone.insertMany(items);
@@ -78,7 +123,7 @@ const populatePhones = (done) => {
     .then(() => done());
 };
 
-const populateTVs = (done) => {
+const refreshTVs = (done) => {
   TV.remove({})
     .then(() => {
       return TV.insertMany(items);
@@ -86,4 +131,4 @@ const populateTVs = (done) => {
     .then(() => done());
 };
 
-module.exports = { items, populateCameras, populatePhones, populateTVs, itemsOneId, itemsTwoId, auth, loginUser, getUserId, user };
+module.exports = { items, refreshCameras, refreshPhones, refreshTVs, itemsOneId, itemsTwoId, auth, loginUser, getUserId, user, refreshUsers, checkUser, checkUser1 };

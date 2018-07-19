@@ -5,10 +5,10 @@ const assert = require('chai').assert;
 const {Camera} = require('../../../db/models/Camera');
 
 
-const { items, populateCameras, auth, loginUser } = require('../../../test/testEnv');
+const { items, refreshCameras, auth, loginUser } = require('../../../test/testEnv');
 
 before(loginUser(auth))
-before(populateCameras);
+before(refreshCameras);
 
 // start testing
 describe('Camera', () => {

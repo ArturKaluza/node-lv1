@@ -5,10 +5,10 @@ const assert = require('chai').assert;
 const {TV} = require('../../../db/models/TV');
 
 
-const { items, populateTVs, auth, loginUser } = require('../../../test/testEnv');
+const { items, refreshTVs, auth, loginUser } = require('../../../test/testEnv');
 
 before(loginUser(auth))
-before(populateTVs);
+before(refreshTVs);
 
 // start testing
 describe('TV', () => {

@@ -16,24 +16,6 @@ describe('Users', () => {
         .end(done);
   })
 
-  it('should create user', done => {
-    const user = {
-      name: 'Nowy',
-      password1: 'test123',
-      password2: 'test123'
-    }
-
-    request(app)
-      .post('/users/create')
-      .send(user)
-        .expect(201)
-        .expect(res => {
-          assert.equal(res.body.name, 'Nowy');
-          assert.notEqual(res.body.password, user.password1);
-        })
-        .end(done);
-  })
-
   it('should not create user with diffrent passwords', done => {
     const user = {
       name: 'Nowy2',
@@ -50,22 +32,42 @@ describe('Users', () => {
           })
           .end(done);
   });
-
-  it('should not create users when already exist', done => {
+  
+  it('should create user', done => {
     const user = {
-      name: 'Nowy',
-      password1: 'test1234',
-      password2: 'test1234'
+      name: 'John',
+      password1: 'qwerty',
+      password2: 'qwerty'
     }
-    
+
     request(app)
-          .post('/users/create')
-          .send(user)
-          .expect(400)
-          .expect(res => {
-            assert.equal(res.body.msg, 'User already exist')
-          })
-          .end(done);
-  });
+      .post('/users/create')
+      .send(user)
+        .expect(201)
+        .expect(res => {
+          assert.equal(res.body.name, 'John');
+          assert.notEqual(res.body.password, user.password1);
+        })
+        .end(done);
+  })
+
+  // DB preformance!!!
+
+  // it('should not create users when user already exist', done => {
+  //   const user = {
+  //     name: 'Nowy',
+  //     password1: 'test1234',
+  //     password2: 'test1234'
+  //   }
+    
+  //   request(app)
+  //         .post('/users/create')
+  //         .send(user)
+  //         .expect(400)
+  //         .expect(res => {
+  //           assert.equal(res.body.msg, 'User already exist')
+  //         })
+  //         .end(done);
+  // });
 })
 

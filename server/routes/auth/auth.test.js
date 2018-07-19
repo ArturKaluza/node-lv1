@@ -2,6 +2,8 @@ const {app} = require('../../server');
 const request = require('supertest');
 const assert = require('chai').assert;
 
+const { checkUser } = require('../../../test/testEnv');
+
 describe('Auth', () => {
   it('should return token', done => {
     request(app)
@@ -15,7 +17,7 @@ describe('Auth', () => {
             assert.exists(res.body.token)
           })
           .end(done)
-  })
+  });
 
   it('should not return token(404)', done => {
     request(app)
@@ -30,5 +32,5 @@ describe('Auth', () => {
             assert.exists(res.body.message)
           })
           .end(done)
-  })
-})
+  });
+});
