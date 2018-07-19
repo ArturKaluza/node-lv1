@@ -41,10 +41,10 @@ const Camera = (props) => (
     <i className="camera__cart-icon fas fa-shopping-cart"></i>
     <h3 className="camera__cart-text">Add To Cart</h3>
     </div>
-    
-    <div>
-      {sessionStorage.getItem('token') ? <button className='camera__closeBtn' onClick={() => props.deleteItem(props.id)}><i className="fas fa-times"></i></button> : false}
-    </div>
+     
+     <div>
+       {sessionStorage.getItem('token') ? <button className='camera__closeBtn' onClick={() => props.deleteItem(props.id)}><i className="fas fa-times"></i></button> : false}
+     </div>
 
   </div>
 );
