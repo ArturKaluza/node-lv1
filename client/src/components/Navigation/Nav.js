@@ -8,11 +8,11 @@ const Navigation = (props) => (
           
       <h2 className='nav__heading'>Products</h2>
       <ul className='nav__list'>
-        <NavLink to="/cameras" className="nav__list-item" activeClassName="is-active">Cameras</NavLink>
-        <NavLink to="/tv" className="nav__list-item" activeClassName="is-active">TVs</NavLink>
-        <NavLink to="/phones" className="nav__list-item" activeClassName="is-active">Phones</NavLink>
+        <NavLink to="/cameras" className="nav__list-item" activeClassName="is-active">Cameras<i class="fas fa-camera"></i></NavLink>
+        <NavLink to="/tv" className="nav__list-item" activeClassName="is-active">TVs<i class="fas fa-tv"></i></NavLink>
+        <NavLink to="/phones" className="nav__list-item" activeClassName="is-active">Phones<i class="fas fa-mobile-alt"></i></NavLink>
         {/* <NavLink to="/tam" className="nav__list-item" activeClassName="is-active">Not Found</NavLink> */}
-        <NavLink to="/product" className="nav__list-prod" activeClassName="is-active">All</NavLink>
+        <NavLink to="/product" className="nav__list-prod" activeClassName="is-active">All<i class="fas fa-globe"></i></NavLink>
       </ul>
       
       <div className={props.visible}>

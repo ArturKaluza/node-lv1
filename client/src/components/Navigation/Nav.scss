@@ -24,11 +24,12 @@
     flex-direction: column;
     background: #fff;
     border: 1px solid #555;
-    margin-bottom: 20px;  
-
+    margin-bottom: 20px;
+    
     &-item {
-      display: block;
-      color: #555;
+      display: flex;
+      justify-content: space-between;
+      color: #277554;
       text-decoration: none;
       padding: 5px 10px;
       cursor: pointer;
@@ -39,13 +40,24 @@
       }
 
       &:hover {
-        background: #ccc;
+        color: #000;
         border-color: #555;
-      }      
+      }
+      
+      &:hover > i {
+        color: #000;
+        transform: scale(1.2);
+      }
+      
+      & > i {
+        color: #277554;
+        transition: .3s;
+      }
     }
 
     &-prod {
-      display: block;
+      display: flex;
+      justify-content: space-between;
       width: 100%;
       background: #f1c40f;
       color: #fff;
@@ -59,6 +71,10 @@
       &:hover {
         background: #fff;
         color: #277554;
+      }
+
+      &:hover > i {
+        transform: scale(1.2);
       }
     }
   }

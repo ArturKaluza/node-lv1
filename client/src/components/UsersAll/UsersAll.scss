@@ -60,6 +60,10 @@
   bottom: 0%;
   left: 50%;
   transform: translateX(-50%);
+
+  &:hover {
+    transform: translate(-50%, -3px);
+  }
 }
 
 .alertBox {

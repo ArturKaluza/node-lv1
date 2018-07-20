@@ -108,7 +108,7 @@ class NewItem extends Component {
   render() {
     return (
       <div className="form">
-        <NavLink to="/" exact className='form__closeBtn'>X</NavLink>
+        <NavLink to="/cameras" exact className='form__closeBtn'>X</NavLink>
         <div className="form__heading">
           <h2 className="form__heading-title">Add new Item</h2>
         </div>
