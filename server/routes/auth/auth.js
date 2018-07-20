@@ -5,6 +5,7 @@ const passport = require('passport');
 const keys = require('../../../config/keys');
 
 const  Users = require('../../../db/models/Users');
+const { logger } = require('../../logger');
 
 // POST login
 router.post('/login', (req, res, next) => {
@@ -21,6 +22,9 @@ router.post('/login', (req, res, next) => {
     Users.findOneAndUpdate({name: user.name}, {lastLogin: Date.now()}, {new: true})
       .catch(e => res.status(400).send(e));
 
+    // add logger 
+    logger.info({user: (user.name), msg: 'Login'});
+    
     req.login(user, {session: false}, err => {
       if (err) {
         res.send(err)

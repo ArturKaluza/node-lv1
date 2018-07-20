@@ -39,12 +39,12 @@ class UsersAll extends Component {
       if (response.status === 200) {
         const filteredUsers = this.state.users.filter(user => user._id !== id);
         this.setState({users: filteredUsers});
-      } 
-
-      this.setState({authorize: true})
-      setTimeout(() => {
-        this.setState({authorize: false})
-      }, 2500)
+      } else {
+        this.setState({authorize: true})
+        setTimeout(() => {
+          this.setState({authorize: false})
+        }, 2500)
+      }
     })
     .catch(e => console.log(e));
 
