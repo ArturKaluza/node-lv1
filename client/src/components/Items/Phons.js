@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import Navigation from '../Navigation/Nav';
 import List from '../List/List';
+import Spinner from '../Spinner/Spinner';
 
 class Phones extends Component {
   constructor() {
@@ -33,7 +34,7 @@ class Phones extends Component {
     e.preventDefault();
     const flag = e.target.value.trim() ? true : false; 
     
-    fetch(`http://localhost:3000/search/${e.target.value}`)
+    fetch(`http://localhost:3000/search/phone/${e.target.value}`)
     .then(res => res.json())
     .then(data => {
       if (data[0] && flag) {
@@ -141,6 +142,7 @@ class Phones extends Component {
           {/* {Render list} */}
             {this.state.foundItems[0] ? <List list={this.state.foundItems.map(item => item._source)} />  : <List list={this.state.phones} deleteItem={this.handleDeleteItem } /> }
           
+            {this.state.phones.length === 0 ? <Spinner /> : false }
 
           <div className='items__btn'>
           {!this.state.foundItems.length && ((this.state.currentPage > 1) && (this.state.currentPage <= this.state.pages) && <button className='items__btn-prev btn' onClick={this.paginationPrevius} >Previus</button>)}

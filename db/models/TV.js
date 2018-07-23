@@ -25,6 +25,11 @@ const TVSchema = new Schema({
         type: String,
         required: true,
         es_indexed:true
+    },
+    itemType: {
+        type: String,
+        default: 'TV',
+        es_indexed: true,
     }
 });
 

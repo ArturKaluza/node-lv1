@@ -1,0 +1,33 @@
+.spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &__body {
+    margin: 10vh auto;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    border-top: 3px #277554 solid;
+    border-bottom: 3px #277554 solid;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent;
+    animation: rotate1 .8s linear infinite;
+  }
+
+  &__text {
+    color: #227777;
+    font-family: "Roboto", sans-serif;
+    font-size: 30px;
+    font-weight: 300;
+  }
+}
+
+@keyframes rotate1 {
+  0% {
+    transform: rotate(0);
+  } 100% {
+    transform: rotate(360deg);
+  }
+}

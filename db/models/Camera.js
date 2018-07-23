@@ -25,6 +25,11 @@ const CameraSchema = new Schema({
         type: String,
         required: true,
         es_indexed:true
+    },
+    itemType: {
+        type: String,
+        default: 'Camera',
+        es_indexed: true,
     }
 });
 
