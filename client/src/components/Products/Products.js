@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { NavLink } from 'react-router-dom';
 
 import SearchBar from '../SearchBar/SearchBar';
 import Navigation from '../Navigation/Nav';
@@ -50,10 +51,19 @@ class Products extends Component {
     return (
       <div className='layout'>
         <Navigation visible={'hidden'}/>
-        
+                
         <div className='items'>
           <SearchBar onSearch={this.handleInputChange}/>
-          <h3 className='items__title'>Products</h3>
+
+           <div className="heading">
+            <h3 className='items__title'><span>P</span><span>r</span><span>o</span><span>d</span><span>u</span><span>c</span><span>t</span><span>s</span></h3>
+            <div className='items__btns'>
+              {!!sessionStorage.getItem('token') && <NavLink to="/cameras/new" className="heading__btns-new btn">add new item</NavLink>}
+              {!!sessionStorage.getItem('token') && <NavLink to="/user/all" className="heading__btns-new btn">See all users</NavLink>}
+              <NavLink to="user/register" className="heading__btns-new btn">Register user</NavLink>
+            </div>            
+          </div>
+          
           {this.state.foundItems[0] ? <List list={this.state.foundItems.map(item => item._source)} />  : <List list={this.state.items} /> }
         </div>
       </div>
