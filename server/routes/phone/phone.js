@@ -11,7 +11,9 @@ router.get('/', (req, res) => {
   // url constuction = localhost:3000/camera
   
   if (page === undefined && limit === undefined) {
-    Phone.find({}).then(doc => {
+    Phone.find({})
+      .sort({_id: 1 })
+      .then(doc => {
       return res.send(doc)
     }, e => res.status(400).send(e));
     
@@ -21,7 +23,7 @@ router.get('/', (req, res) => {
     limit === undefined ? limit = 5 : limit = parseInt(limit);
       
     // add pagination 
-    Phone.paginate({}, {page, limit}).then(response => {
+    Phone.paginate({}, {page, limit, sort: {_id: 1}}).then(response => {
       res.send(response);
     }, e => res.status(400).send(e));
   }  

@@ -7,18 +7,20 @@ const {TV} = require('../../../db/models/TV');
 router.get('/', (req, res) => {
   let {page, limit} = req.query;
   
-  // get all camreas
+  // get all TVs
   // url constuction = localhost:3000/camera
   
   if (page === undefined && limit === undefined) {
-    TV.find({}).then(doc => {
-      if (doc.length < 1) {
-        return TV.collection.insert(add20TV())
-          .then(docs => res.send(docs))
-          .catch(e => res.status(400).send(e));
-      }
-      res.send(doc)
-    }, e => res.status(400).send(e));
+    TV.find({})
+      .sort({_id: 1})
+      .then(doc => {
+        if (doc.length < 1) {
+          return TV.collection.insert(add20TV())
+            .then(docs => res.send(docs))
+            .catch(e => res.status(400).send(e));
+        }
+        res.send(doc)
+      }, e => res.status(400).send(e));
     
   } else {
     // checking query params
@@ -26,7 +28,7 @@ router.get('/', (req, res) => {
     limit === undefined ? limit = 5 : limit = parseInt(limit);
       
     // add pagination 
-    TV.paginate({}, {page, limit}).then(response => {
+    TV.paginate({}, {page, limit, sort: {_id: 1}}).then(response => {
       if (response.docs.length < 1) {
         return TV.collection.insert(add20TV())
           .then(() => TV.paginate({}, {page, limit}))

@@ -20,7 +20,10 @@ router.get('/', async (req, res) => {
       if (!doc) {
         res.status(404).end();
       }
-      res.send(doc);
+      // sorting documents
+      const sort = await doc.sort({ _id: 1});
+
+      res.send(sort);
 
     } catch (e) {
       res.status(400).end();
@@ -33,7 +36,7 @@ router.get('/', async (req, res) => {
       
     // add pagination 
     try {
-      const paginateItem = await Camera.paginate({}, {page, limit});
+      const paginateItem = await Camera.paginate({}, {page, limit, sort: {_id: 1}});
       if (!paginateItem) res.status(404).end();
 
       res.send(paginateItem);
