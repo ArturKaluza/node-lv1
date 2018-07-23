@@ -77,7 +77,7 @@ class LoginUser extends Component {
     return (
       <div className='bodyForm'>
         <div className="formLogin">
-        <NavLink to="/" exact className='form__closeBtn'>X</NavLink>
+        <NavLink to="/cameras" exact className='form__closeBtn'>X</NavLink>
         <div className="form__heading">
           <h2 className="form__heading-title login">Login</h2>
         </div>

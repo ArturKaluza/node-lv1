@@ -7,7 +7,7 @@ const {Camera} = require('../../../db/models/Camera');
 
 const { items, refreshCameras, auth, loginUser } = require('../../../test/testEnv');
 
-before(loginUser(auth))
+before(loginUser(auth));
 before(refreshCameras);
 
 // start testing
