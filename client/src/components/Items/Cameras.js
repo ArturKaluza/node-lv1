@@ -26,7 +26,8 @@ class Cameras extends Component {
       pages: null,
       itemPerPage: 4,
       foundItems: [],
-      auth: false
+      auth: false,
+      itemType: ''
     }
   }
   

@@ -12,6 +12,7 @@ import NewItem from '../components/NewItem/NewItem';
 import RegisterUser from '../components/RegisterUser/RegisterUser';
 import LoginUser from '../components/LoginUser/LoginUser';
 import UsersAll from '../components/UsersAll/UsersAll';
+import ItemTempl from '../components/ItemTempl/ItemTempl';
 
 const AppRouter = () => (
     <BrowserRouter>
@@ -24,7 +25,9 @@ const AppRouter = () => (
             <Route path="/cameras" component={Cameras} />
             <Route path="/TV" component={TVs} />
             <Route path="/phones" component={Phones} />
-            <Route path="/product" component={Products} />
+
+            <Route path="/product" component={Products} exact />
+            <Route path="/product/:type/:id" component={ItemTempl} />
 
             <Route path='/user/login' component={LoginUser} />
             <Route path="/user/register" component={RegisterUser} />

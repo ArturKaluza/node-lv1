@@ -108,3 +108,23 @@
     font-size: 26px;
   }
 }
+
+.anim {
+  animation: link 2s infinite ease-in-out;
+}
+
+@keyframes link {
+  0% {
+    color: #777;
+
+  } 
+  33% {
+    color: #277554;
+  } 
+  66% {
+    color: #FFE526;
+  }  
+  100% {
+    color: #777;
+  }
+}
