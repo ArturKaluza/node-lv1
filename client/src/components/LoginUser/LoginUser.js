@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, Redirect } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import style from './LoginUser.scss';
 import { rejects } from 'assert';
 
@@ -77,7 +77,7 @@ class LoginUser extends Component {
     return (
       <div className='bodyForm'>
         <div className="formLogin">
-        <NavLink to="/cameras" exact className='form__closeBtn'>X</NavLink>
+        <Link to="/cameras" exact className='form__closeBtn'>X</Link>
         <div className="form__heading">
           <h2 className="form__heading-title login">Login</h2>
         </div>
@@ -103,13 +103,13 @@ class LoginUser extends Component {
                 <h2 className='width-error'>User and password don't match</h2>
             </div>       
           
-            { this.state.auth ? <NavLink to='/cameras' className="form__body-btn btn mt20">Store</NavLink> : <button type="submit" className="form__body-btn btn mt20">Submit</button> }
+            { this.state.auth ? <Link to='/cameras' className="form__body-btn btn mt20">Store</Link> : <button type="submit" className="form__body-btn btn mt20">Submit</button> }
             { this.state.redirect ? <Redirect to='/cameras' /> : false }
             
           </form>
 
           <h2 className='form__heading-title slogan'>Need Account?</h2>
-          <NavLink to='/user/register' className="form__body-btn btn">Register User</NavLink>          
+          <Link to='/user/register' className="form__body-btn btn">Register User</Link>          
 
         </div>
       </div>

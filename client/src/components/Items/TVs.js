@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import style from './Items.scss';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import SearchBar from '../SearchBar/SearchBar';
 import Navigation from '../Navigation/Nav';
@@ -123,7 +123,7 @@ class TVs extends Component {
   render() {
     return (
       <div className='layout'>
-        <Navigation onItemPerPage={this.handleItemPerPage}/>
+        <Navigation onItemPerPage={this.handleItemPerPage} logout={this.handleLogout} />
         
         <div className='items'>
           <SearchBar onSearch={this.handleInputChange}/>
@@ -131,9 +131,9 @@ class TVs extends Component {
           <div className="heading">
             <h3 className='items__title'><span>T</span><span>V</span><span>s</span></h3>
             <div className='items__btns'>
-              {!!sessionStorage.getItem('token') && <NavLink to="/cameras/new" className="heading__btns-new btn">add new item</NavLink>}
-              {!!sessionStorage.getItem('token') && <NavLink to="/user/all" className="heading__btns-new btn">See all users</NavLink>}
-              <NavLink to="user/register" className="heading__btns-new btn">Register user</NavLink>
+              {!!sessionStorage.getItem('token') && <Link to="/cameras/new" className="heading__btns-new btn">add new item</Link>}
+              {!!sessionStorage.getItem('token') && <Link to="/user/all" className="heading__btns-new btn">See all users</Link>}
+              <Link to="user/register" className="heading__btns-new btn">Register user</Link>
             </div>            
           </div>
           

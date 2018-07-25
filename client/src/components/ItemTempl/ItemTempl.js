@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import style from './ItemTempl.scss';
 
 const ItemTempl = (props) => {
@@ -47,9 +47,9 @@ const ItemTempl = (props) => {
           
     </div>
 
-    <NavLink to={`/${props.location.state.item.itemType}s`} className='form__body-btn btn'>
+    <Link to={`/${props.location.state.item.itemType}s`} className='form__body-btn btn'>
       Go Back
-    </NavLink>
+    </Link>
       
   </div>
     

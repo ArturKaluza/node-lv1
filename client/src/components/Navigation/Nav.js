@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import style from './Nav.scss'; 
 
 const Navigation = (props) => (
@@ -26,7 +26,7 @@ const Navigation = (props) => (
       </div>
 
       <div className='nav__btns'>
-        {!!sessionStorage.getItem('token') ? <button className="nav__btns-login logout" onClick={props.logout}>Log-out</button> : <NavLink to='/user/login' className="nav__btns-login">Log-in</NavLink>}
+        {!!sessionStorage.getItem('token') ? <button className="nav__btns-login logout" onClick={props.logout}>Log-out</button> : <Link to='/user/login' className="nav__btns-login">Log-in</Link>}
         
       </div>
 
