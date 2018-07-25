@@ -16,3 +16,5 @@
 {"message":{"user":"nowy","msg":"Login"},"level":"info"}
 {"message":{"user":"nowy","msg":"Login"},"level":"info"}
 {"message":{"user":"admin","msg":"Login"},"level":"info"}
+{"message":{"user":"Tomek","msg":"Login"},"level":"info"}
+{"message":{"user":"Johnny","msg":"Login"},"level":"info"}

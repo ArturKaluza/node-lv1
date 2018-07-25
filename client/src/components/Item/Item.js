@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import style from './Item.scss';
 
+// {`/product/${props.itemType}/${props.id}`}
+
 const Camera = (props) => (
- 
+  
   <div className='camera'>
-     
     <div className='camera__heading'>
-      <NavLink to={`/product/${props.itemType}/${props.id}`} className="list__item" >  
+      <NavLink to={{
+            pathname: `/product/${props.itemType}/${props.id}`,
+            state: {item: props.item}        
+            }} className="list__item" >  
         <h3 className='camera__heading-title anim'>{props.name}</h3>
       </NavLink>  
       <p className='camera__heading-price'>$ {props.price}</p>

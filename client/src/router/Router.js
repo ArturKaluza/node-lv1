@@ -23,7 +23,7 @@ const AppRouter = () => (
             <Route path="/" component={Home} exact />
             <Route path="/cameras/new" component={NewItem} />
             <Route path="/cameras" component={Cameras} />
-            <Route path="/TV" component={TVs} />
+            <Route path="/TVs" component={TVs} />
             <Route path="/phones" component={Phones} />
 
             <Route path="/product" component={Products} exact />
